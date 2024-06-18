@@ -76,7 +76,7 @@ public class VampireAdventureApp {
     }
 
     /**
-     *
+     *prints out some information
      */
     private static void createVampire() {
         System.out.println("\nLeider hat diese Methode noch keinen Code ... aber Du kannst sicher nachvollziehen, wie der Ablauf ist. Hier soll ein neuer Vampir angelegt werden.\n");
