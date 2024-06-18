@@ -9,7 +9,11 @@ public class VampireAdventureApp {
     private static Scanner scanner = new Scanner(System.in);
 
     /**
-     * @param args
+     * The main method is the entry point of the application. It displays an ASCII art bat,
+     * shows the menu, and processes user input in an infinite loop.
+     *
+     * @param args command line arguments (not used)
+     *
      */
     public static void main(String[] args) {
         showBat();
@@ -22,7 +26,9 @@ public class VampireAdventureApp {
     }
 
     /**
-     * @return
+     * Reads user input from the console and returns the chosen menu option.
+     *
+     * @return the menu option chosen by the user
      */
     private static int readUserInput() {
         System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein:\t");
@@ -31,7 +37,9 @@ public class VampireAdventureApp {
     }
 
     /**
-     * @param choice
+     * Handles the user's menu choice and executes the corresponding action.
+     *
+     * @param choice the menu option chosen by the user
      */
     private static void handle(int choice) {
         switch (choice) {
@@ -50,7 +58,7 @@ public class VampireAdventureApp {
     }
 
     /**
-     *prints a menu
+     *Displays the main menu with options to create, display, or remove a vampire.
      */
     private static void showMenu() {
         System.out.println("\n======= Vampire Adventure 1.0 =======\n");
@@ -76,7 +84,8 @@ public class VampireAdventureApp {
     }
 
     /**
-     *prints out some information
+     *Placeholder method for creating a new vampire.
+     *Prints out a message indicating where the vampire creation logic should go.
      */
     private static void createVampire() {
         System.out.println("\nLeider hat diese Methode noch keinen Code ... aber Du kannst sicher nachvollziehen, wie der Ablauf ist. Hier soll ein neuer Vampir angelegt werden.\n");
