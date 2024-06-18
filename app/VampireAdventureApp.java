@@ -50,7 +50,7 @@ public class VampireAdventureApp {
     }
 
     /**
-     *
+     *prints a menu
      */
     private static void showMenu() {
         System.out.println("\n======= Vampire Adventure 1.0 =======\n");
