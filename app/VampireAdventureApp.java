@@ -2,19 +2,18 @@ package app;
 
 import java.util.Scanner;
 
+import model.Vampire;
+
 /**
  * @author profMajuntke, lucaslar
+ *  * VampireAdventureApp ist das Hauptprogramm, das ein Menü anzeigt, in dem man einen Vampir erstellen,
+ * die Daten anzeigen, den Vampir löschen und ein Abenteuer starten kann.
  */
 public class VampireAdventureApp {
     private static Scanner scanner = new Scanner(System.in);
+    private static Vampire aktuellerVampir;
 
-    /**
-     * The main method is the entry point of the application. It displays an ASCII art bat,
-     * shows the menu, and processes user input in an infinite loop.
-     *
-     * @param args command line arguments (not used)
-     *
-     */
+
     public static void main(String[] args) {
         showBat();
         while (true) {
@@ -33,6 +32,7 @@ public class VampireAdventureApp {
     private static int readUserInput() {
         System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein:\t");
         int choiceInternal = scanner.nextInt();
+        scanner.nextLine();
         return choiceInternal;
     }
 
@@ -47,8 +47,16 @@ public class VampireAdventureApp {
                 createVampire();
                 break;
             case 2:
+                showVampireData();
                 break;
             case 3:
+                deleteVampire();
+                break;
+            case 4:
+                startAdventure();
+                break;
+            case 5:
+                exitGame();
                 break;
             default: {
                 System.out.println("Ungueltige Eingabe. Bitte ueberpruefen Sie Ihre Eingabe");
@@ -57,6 +65,7 @@ public class VampireAdventureApp {
         }
     }
 
+
     /**
      *Displays the main menu with options to create, display, or remove a vampire.
      */
@@ -64,9 +73,11 @@ public class VampireAdventureApp {
         System.out.println("\n======= Vampire Adventure 1.0 =======\n");
 
         final String[] menuItems = {
-                "(1)\t Vampir anlegen",
-                "(2)\t Vampirdaten anzeigen",
-                "(3)\t Vampir entfernen"
+            "(1)\t Vampir anlegen",
+            "(2)\t Vampirdaten anzeigen",
+            "(3)\t Vampir entfernen",
+            "(4)\t Abenteuer starten",
+            "(5)\t Beenden"
         };
         for (String menuItem : menuItems) {
             System.out.println(menuItem);
@@ -83,11 +94,49 @@ public class VampireAdventureApp {
         System.out.println("       `-'             `-'");
     }
 
-    /**
-     *Placeholder method for creating a new vampire.
-     *Prints out a message indicating where the vampire creation logic should go.
-     */
     private static void createVampire() {
-        System.out.println("\nLeider hat diese Methode noch keinen Code ... aber Du kannst sicher nachvollziehen, wie der Ablauf ist. Hier soll ein neuer Vampir angelegt werden.\n");
+        System.out.print("Geben Sie den Namen des Vampirs ein: ");
+        String name = scanner.nextLine();
+        System.out.print("Geben Sie das Alter des Vampirs ein: ");
+        int alter = scanner.nextInt();
+        scanner.nextLine(); 
+        System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
+        String blutgruppe = scanner.nextLine();
+
+        aktuellerVampir = new Vampire(name, alter, blutgruppe);
+        System.out.println("\nVampir erfolgreich erstellt!\n");
     }
+
+    private static void showVampireData() {
+        if (aktuellerVampir == null) {
+            System.out.println("\nEs gibt keinen Vampir, den man anzeigen kann.\n");
+        } else {
+            System.out.println("\n" + aktuellerVampir + "\n");
+        }
+    }
+
+    private static void deleteVampire() {
+        if (aktuellerVampir == null) {
+            System.out.println("\nEs gibt keinen Vampir, den man löschen kann.\n");
+        } else {
+            aktuellerVampir = null;
+            System.out.println("\nVampir erfolgreich gelöscht!\n");
+        }
+    }
+
+    private static void startAdventure() {
+        if (aktuellerVampir == null) {
+            System.out.println("\nEs gibt keinen Vampir, mit dem man ein Abenteuer starten kann.\n");
+            return;
+        }
+
+        System.out.println("\nDas Abenteuer hat begonnen!\n");
+        
+    }
+
+    private static void exitGame() {
+        System.out.println("\nSpiel wird beendet. Auf Wiedersehen!\n");
+        System.exit(0);
+    }
+
 }
