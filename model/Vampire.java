@@ -11,5 +11,33 @@ public class Vampire {
         this.blutgruppe = blutgruppe;
     }
 
-    
+    // Getter und Setter
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAlter() {
+        return alter;
+    }
+
+    public void setAlter(int alter) {
+        this.alter = alter;
+    }
+
+    public String getBlutgruppe() {
+        return blutgruppe;
+    }
+
+    public void setBlutgruppe(String blutgruppe) {
+        this.blutgruppe = blutgruppe;
+    }
+
+    @Override
+    public String toString() {
+        return "Vampir Name: " + name + "\nAlter: " + alter + "\nBlutgruppe: " + blutgruppe;
+    }
 }
