@@ -1,0 +1,123 @@
+title: |md
+  # Vampire Adventure Klassendiagramm
+  ## Svenja Dunger, Tala Karoum
+| {near: top-center}
+
+VampireAdventure: {
+  Character: {
+    shape: class
+
+    name: "String"
+    energy: "int"
+    alive: "boolean"
+
+    takeDamage(amount int): "void"
+    flee(): "boolean"
+  }
+
+  Vampire: {
+    shape: class
+    extends: Character
+
+    age: "int"
+    grandness: "int"
+    hunger: "int"
+    finallyDead: "boolean"
+    doublePower: "boolean"
+    transparency: "boolean"
+
+    attackHuman(human Human): "void"
+    drinkBlood(amount double): "void"
+    attack(vh VampireHunter): "void"
+  }
+
+  Human: {
+    shape: class
+
+    amountOfBlood: "double"
+
+    flee(): "boolean"
+    loseBlood(amount double): "void"
+  }
+
+  Demon: {
+    shape: class
+
+    name: "String"
+    vampireAbility: "String"
+
+    presentTask(): "void"
+  }
+
+  VampireHunter: {
+    shape: class
+    extends: Character
+
+    attack(vampire Vampire): "void"
+  }
+
+  Game: {
+    shape: class
+
+    currentVampire: "Vampire"
+    humans: "Human[]"
+    vampireHunters: "VampireHunter[]"
+    demons: "Demon[]"
+    currentRound: "int"
+    gameState: "String"
+
+    initializeGame(): "void"
+    startNightAdventure(): "void"
+    meetHuman(): "void"
+    meetVampireHunter(): "void"
+    meetDemon(): "void"
+    endGame(): "void"
+  }
+}
+
+# Connections with labels and arrowheads
+VampireAdventure.Game -> VampireAdventure.Vampire: Controls {
+  target-arrowhead.label: 1
+}
+
+VampireAdventure.Game -> VampireAdventure.Human: Manages {
+  target-arrowhead.label: *
+}
+
+VampireAdventure.Game -> VampireAdventure.VampireHunter: Manages {
+  target-arrowhead.label: *
+}
+
+VampireAdventure.Game -> VampireAdventure.Demon: Manages {
+  target-arrowhead.label: *
+}
+
+VampireAdventure.Vampire -> VampireAdventure.Human: Attacks and consumes {
+  source-arrowhead.label: 1
+  target-arrowhead.label: *
+}
+
+VampireAdventure.Vampire -> VampireAdventure.Demon: Gains abilities {
+  source-arrowhead.label: 1
+  target-arrowhead.label: 1
+}
+
+VampireAdventure.Vampire -> VampireAdventure.VampireHunter: Fights with {
+  source-arrowhead.label: 1
+  target-arrowhead.label: *
+}
+
+VampireAdventure.VampireHunter -> VampireAdventure.Vampire: Hunts {
+  source-arrowhead.label: *
+  target-arrowhead.label: 1
+}
+
+VampireAdventure.Character -> VampireAdventure.Vampire: Inherits {
+  source-arrowhead.label: *
+  target-arrowhead.label: 1
+}
+
+VampireAdventure.Character -> VampireAdventure.VampireHunter: Inherits {
+  source-arrowhead.label: *
+  target-arrowhead.label: 1
+}
