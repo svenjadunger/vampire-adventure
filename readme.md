@@ -9,7 +9,7 @@
 
 ### Diagramm
 
-To create the diagram run
+To create the diagram run:
 
-´ d2 -w Classdiagramm.d2 Classdiagramm.png´
+` d2 -w Classdiagramm.d2 Classdiagramm.png`
 
