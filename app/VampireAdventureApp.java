@@ -1,7 +1,7 @@
 package app;
 
 import java.util.Scanner;
-
+import java.util.Random;
 import model.Vampire;
 
 /**
@@ -12,6 +12,7 @@ import model.Vampire;
 public class VampireAdventureApp {
     private static Scanner scanner = new Scanner(System.in);
     private static Vampire aktuellerVampir;
+    private static Random random = new Random();
 
 
     public static void main(String[] args) {
@@ -153,6 +154,57 @@ public class VampireAdventureApp {
     }
 
     }
+    private static void meetHuman() {
+        System.out.println("\nDu begegnest einem Menschen. Was möchtest du tun?");
+        System.out.println("1. Mensch angreifen");
+        System.out.println("2. Nichts tun");
+        
+        int choice = readUserInput();
+        if (choice == 1) {
+        System.out.print("Wie viel Blut möchtest du trinken (0-6 Liter)? ");
+        double bloodAmount = scanner.nextDouble();
+        scanner.nextLine(); 
+        aktuellerVampir.drinkBlood(bloodAmount);
+        System.out.println("Du hast " + bloodAmount + " Liter Blut getrunken.");
+        } else {
+        System.out.println("Du hast den Menschen in Ruhe gelassen.");
+        }
+        }
+        
+        private static void meetDemon() {
+        System.out.println("\nEin Dämon erscheint. Er fordert dich zu einem Rätsel heraus.");
+       
+        }
+        
+        private static void meetVampireHunter() {
+        System.out.println("\nEin Vampirjäger kreuzt deinen Weg. Deine Zeit ist gekommen...");
+        System.out.println("1. Fliehen");
+        System.out.println("2. Kämpfen");
+        
+        int choice = readUserInput();
+        if (choice == 1) {
+        boolean success = aktuellerVampir.flee();
+        if (success) {
+        System.out.println("Du konntest erfolgreich fliehen.");
+        } else {
+        System.out.println("Fluchtversuch gescheitert. Du musst kämpfen.");
+        fightVampireHunter();
+        }
+        } else {
+        fightVampireHunter();
+        }
+        }
+        
+        private static void fightVampireHunter() {
+        System.out.println("Kampf beginnt...");
+        aktuellerVampir.takeDamage(5);
+        if (aktuellerVampir.isFinallyDead()) {
+        System.out.println("Der Vampirjäger hat dich besiegt. Spiel vorbei.");
+        aktuellerVampir = null;
+        } else {
+        System.out.println("Du hast den Vampirjäger besiegt.");
+        }
+        }        
 
     private static void exitGame() {
         System.out.println("\nSpiel wird beendet. Auf Wiedersehen!\n");
