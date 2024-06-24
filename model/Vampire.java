@@ -36,8 +36,5 @@ public class Vampire {
         this.blutgruppe = blutgruppe;
     }
 
-    @Override
-    public String toString() {
-        return "Vampir Name: " + name + "\nAlter: " + alter + "\nBlutgruppe: " + blutgruppe;
-    }
+   
 }
