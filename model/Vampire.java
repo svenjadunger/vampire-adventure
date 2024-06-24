@@ -9,11 +9,13 @@ public class Vampire {
     private boolean finallyDead;
     private boolean doublePower;
     private boolean transparency;
+    private String blutgruppe;
 
     // Konstruktor
-    public Vampire(String name, int age) {
+    public Vampire(String name, int age, String blutgruppe) {
         this.name = name;
         this.age = age;
+        this.blutgruppe = blutgruppe;
     }
 
     // Getter und Setter
@@ -31,6 +33,14 @@ public class Vampire {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getBlutgruppe () {
+        return blutgruppe;
+    }
+
+    public void setBlutgruppe (String blutgruppe) {
+        this.blutgruppe = blutgruppe;
     }
 
     public int getGrandness() {
@@ -108,12 +118,5 @@ public class Vampire {
         return Math.random() <= 0.6;
     }
 
-    @Override
-    public String toString() {
-        return "Vampir Name: " + name + "\nAlter: " + age +
-               "\nMächtigkeit: " + grandness + "\nHunger: " + hunger + 
-               "\nEnergie: " + energy + "\nFähigkeiten:\n  - Double Power: " + 
-               (doublePower ? "aktiviert" : "deaktiviert") +
-               "\n  - Transparency: " + (transparency ? "aktiviert" : "deaktiviert");
-    }
+   
 }
