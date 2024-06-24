@@ -130,8 +130,28 @@ public class VampireAdventureApp {
             return;
         }
 
-        System.out.println("\nDas Abenteuer hat begonnen!\n");
-        
+        for (int round = 1; round <= 12; round ++) {
+        System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round 1");
+            
+            int event = random.nextInt(100) + 1;
+            if (event <= 60) {
+                meetHuman();
+            } else if (event <= 80) {
+                meetDemon();
+            } else if (event <= 90) {
+                meetVampireHunter();
+            } else {
+                System.out.println("\nNichts passiert.\n");
+            }
+    aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
+    if (aktuellerVampir.getHunger() >= 5) {
+        System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
+        aktuellerVampir = null;
+        return;
+    }
+    aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
+    }
+
     }
 
     private static void exitGame() {
