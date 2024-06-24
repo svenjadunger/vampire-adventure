@@ -6,7 +6,7 @@ import model.Vampire;
 
 /**
  * @author profMajuntke, lucaslar
- *  * VampireAdventureApp ist das Hauptprogramm, das ein Menü anzeigt, in dem man einen Vampir erstellen,
+ * VampireAdventureApp ist das Hauptprogramm, das ein Menü anzeigt, in dem man einen Vampir erstellen,
  * die Daten anzeigen, den Vampir löschen und ein Abenteuer starten kann.
  */
 public class VampireAdventureApp {
@@ -85,7 +85,8 @@ public class VampireAdventureApp {
     }
 
     private static void showBat() {
-        // shows a pretty bat
+        //This ASCII pic can be found at
+        //https://asciiart.website/index.php?art=animals/bats
         System.out.println("   __       __   ____       ____");
         System.out.println("   ) \\     / (   )   \\     /   (");
         System.out.println("  )_  \\_V_/  _(   )_  \\_V_/  _(");
