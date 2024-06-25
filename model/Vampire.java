@@ -111,15 +111,27 @@ public class Vampire {
 
      // Methode zum Trinken von Blut
      public void drinkBlood(double amount) {
+        if (amount < 0 || amount > 6) {
+            System.out.println("Ungueltige Menge. Bitte geben Sie eine Menge zwischen 0 und 6 Litern ein.");
+            return;
+        }
+    
         System.out.println("Der Vampir trinkt " + amount + " Liter Blut.");
-        // Wenn mehr als 6 Liter getrunken werden, verwandelt sich der Mensch in einen Vampir
-        if (amount >= 6) {
+    
+        if (amount >= 5) {
             System.out.println("Der Mensch wird in einen Vampir verwandelt.");
         }
-        // Hunger auf 0 setzen und Energie erhöhen
+    
         this.hunger = 0;
+    
         this.energy += amount;
+        if (this.energy > 20) {
+            this.energy = 20;
+        }
+    
+        System.out.println("Der Hunger des Vampirs ist nun " + this.hunger + " und seine Energie ist " + this.energy + ".");
     }
+    
 
     
         // Methode um Schaden zu nehmen
