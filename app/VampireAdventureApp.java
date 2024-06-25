@@ -95,6 +95,10 @@ public class VampireAdventureApp {
         System.out.println("       `-'             `-'");
     }
 
+    /**
+    * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
+    * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
+    */
     private static void createVampire() {
         System.out.print("Geben Sie den Namen des Vampirs ein: ");
         String name = scanner.nextLine();
@@ -108,6 +112,10 @@ public class VampireAdventureApp {
         System.out.println("\nVampir erfolgreich erstellt!\n");
     }
 
+    /**
+    * Zeigt die Daten des aktuellen Vampirs an, wenn einer existiert.
+    * Gibt eine Nachricht aus, falls kein Vampir existiert.
+    */
     private static void showVampireData() {
         if (aktuellerVampir == null) {
             System.out.println("\nEs gibt keinen Vampir, den man anzeigen kann.\n");
@@ -116,6 +124,10 @@ public class VampireAdventureApp {
         }
     }
 
+    /**
+    * Löscht den aktuellen Vampir, falls einer existiert.
+    * Gibt eine Nachricht aus, falls kein Vampir existiert.
+    */
     private static void deleteVampire() {
         if (aktuellerVampir == null) {
             System.out.println("\nEs gibt keinen Vampir, den man löschen kann.\n");
@@ -125,6 +137,11 @@ public class VampireAdventureApp {
         }
     }
 
+    /**
+    * Startet ein Abenteuer mit dem aktuellen Vampir.
+    * Wenn kein Vampir existiert, wird eine entsprechende Nachricht ausgegeben.
+    * In jedem Durchgang wird ein zufälliges Ereignis ausgelöst und der Hunger sowie die Energie des Vampirs angepasst.
+    */
     private static void startAdventure() {
         if (aktuellerVampir == null) {
             System.out.println("\nEs gibt keinen Vampir, mit dem man ein Abenteuer starten kann.\n");
@@ -154,6 +171,11 @@ public class VampireAdventureApp {
     }
 
     }
+
+    /**
+    * Begegnung mit einem Menschen. Der Benutzer kann entscheiden, ob er den Menschen angreift oder nicht.
+    * Wenn der Benutzer den Menschen angreift, kann er eine bestimmte Menge Blut trinken.
+    */
     private static void meetHuman() {
         System.out.println("\nDu begegnest einem Menschen. Was möchtest du tun?");
         System.out.println("1. Mensch angreifen");
@@ -170,12 +192,17 @@ public class VampireAdventureApp {
         System.out.println("Du hast den Menschen in Ruhe gelassen.");
         }
         }
-        
+    /**
+    *Begegnung mit einem Dämon. Weitere Interaktionen können hinzugefügt werden.
+    */
         private static void meetDemon() {
         System.out.println("\nEin Dämon erscheint. Er fordert dich zu einem Rätsel heraus.");
        
         }
-        
+    /**
+    *Begegnung mit einem Vampirjäger. Der Benutzer kann entscheiden, ob er flieht oder kämpft.
+    *Wenn der Fluchtversuch scheitert, muss der Benutzer kämpfen.
+    */
         private static void meetVampireHunter() {
         System.out.println("\nEin Vampirjäger kreuzt deinen Weg. Deine Zeit ist gekommen...");
         System.out.println("1. Fliehen");
@@ -194,7 +221,11 @@ public class VampireAdventureApp {
         fightVampireHunter();
         }
         }
-        
+      
+    /**
+    *Kampf mit einem Vampirjäger. Der Vampir nimmt Schaden und kann sterben, falls er zu viel Schaden nimmt.
+    *Wenn der Vampirjäger besiegt wird, wird eine entsprechende Nachricht ausgegeben.
+    */
         private static void fightVampireHunter() {
         System.out.println("Kampf beginnt...");
         aktuellerVampir.takeDamage(5);
@@ -205,7 +236,9 @@ public class VampireAdventureApp {
         System.out.println("Du hast den Vampirjäger besiegt.");
         }
         }        
-
+    /**
+    *Beendet das Spiel und gibt eine Abschiedsnachricht aus.
+    */
     private static void exitGame() {
         System.out.println("\nSpiel wird beendet. Auf Wiedersehen!\n");
         System.exit(0);
