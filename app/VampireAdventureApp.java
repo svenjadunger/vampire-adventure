@@ -1,5 +1,6 @@
 package app;
-
+// Error handeling:
+import java.util.InputMismatchException;
 import java.util.Scanner;
 //um Zufallszahlen zu generieren
 import java.util.Random;
@@ -32,9 +33,23 @@ public class VampireAdventureApp {
      * @return the menu option chosen by the user
      */
     private static int readUserInput() {
-        System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein:\t");
-        int choiceInternal = scanner.nextInt();
-        scanner.nextLine();
+        int choiceInternal = -1;
+        boolean validInput = false;
+        while (!validInput) {
+            System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (1-5):\t");
+            try {
+                choiceInternal = scanner.nextInt();
+                scanner.nextLine();
+                if (choiceInternal >= 1 && choiceInternal <= 5) {
+                    validInput = true;
+                } else {
+                    System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
+                scanner.nextLine(); // Konsumiere die ungültige Eingabe
+            }
+        }
         return choiceInternal;
     }
 
