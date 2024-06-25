@@ -16,6 +16,12 @@ public class Vampire {
         this.name = name;
         this.age = age;
         this.blutgruppe = blutgruppe;
+        this.grandness = 0; // Startwert 
+        this.hunger = 0; // Startwert
+        this.energy = 10; // Startwert 
+        this.finallyDead = false;
+        this.doublePower = false;
+        this.transparency = false;
     }
 
     // Getter und Setter
@@ -92,31 +98,73 @@ public class Vampire {
     }
 
     // Methoden
+    // Methode zum Angreifen eines Menschen
     public void attackHuman(Human human) {
+        System.out.println("Der Vampir greift einen Menschen an.");
+        // 60% Chance, den Menschen ruhigzustellen
+        if (Math.random() <= 0.6) {
+            System.out.println("Der Mensch wurde erfolgreich ruhiggestellt.");
+        } else {
+            System.out.println("Der Angriff ist fehlgeschlagen.");
+        }
     }
 
-    public void drinkBlood(double amount) {
+     // Methode zum Trinken von Blut
+     public void drinkBlood(double amount) {
+        System.out.println("Der Vampir trinkt " + amount + " Liter Blut.");
+        // Wenn mehr als 6 Liter getrunken werden, verwandelt sich der Mensch in einen Vampir
+        if (amount >= 6) {
+            System.out.println("Der Mensch wird in einen Vampir verwandelt.");
+        }
+        // Hunger auf 0 setzen und Energie erhöhen
+        this.hunger = 0;
+        this.energy += amount;
     }
 
+    
+        // Methode um Schaden zu nehmen
     public void takeDamage(int damage) {
+        // Wenn der Vampir die Fähigkeit Transparenz hat, gibt es eine 50% Chance, keinen Schaden zu nehmen
         if (this.transparency) {
-            
             if (Math.random() > 0.5) {
+                System.out.println("Dank der Transparenz hat der Vampir keinen Schaden genommen.");
                 return;
             }
         }
+
+        // Schaden abziehen
         this.energy -= damage;
+        System.out.println("Der Vampir hat " + damage + " Schaden genommen.");
+        // Wenn Energie <= 0, ist der Vampir tot
         if (this.energy <= 0) {
             this.finallyDead = true;
+            System.out.println("Der Vampir ist tot.");
         }
     }
 
+    // Methode um einen Vampirjäger anzugreifen
     public void attack(VampireHunter vh) {
+        int damage = (int) (Math.random() * 5); // Zufälliger Schaden zwischen 0 und 5
+        if (this.doublePower) {
+            damage *= 2; // Wenn doppelte Kraft, dann Schaden verdoppeln
+        }
+        System.out.println("Der Vampir verursacht " + damage + " Schaden am Vampirjäger.");
+        vh.takeDamage(damage); // Schaden dem Vampirjäger zufügen
     }
 
+
+    // Methode um zu fliehen
     public boolean flee() {
-        return Math.random() <= 0.6;
+        // 60% Chance erfolgreich zu fliehen
+        boolean success = Math.random() <= 0.6;
+        if (success) {
+            System.out.println("Der Vampir konnte erfolgreich fliehen.");
+        } else {
+            System.out.println("Der Fluchtversuch ist gescheitert.");
+        }
+        return success;
     }
+
 
    
 }

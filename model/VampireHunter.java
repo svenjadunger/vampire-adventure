@@ -25,18 +25,38 @@ public void setEnergy (int energy) {
     this.energy = energy;
 }
 
-//Methoden
+// Methode zum Angreifen eines Vampirs
 public void attack(Vampire vampire) {
-
+    System.out.println("Der Vampirjäger greift einen Vampir an.");
+    // 50% Chance, den Vampir zu treffen und 3 Schaden zu verursachen
+    if (Math.random() <= 0.5) {
+        System.out.println("Der Angriff war erfolgreich. Der Vampir nimmt 3 Schaden.");
+        vampire.takeDamage(3);
+    } else {
+        System.out.println("Der Angriff ist fehlgeschlagen.");
+    }
 }
-public void takeDemage(int amount) {
 
+// Methode um Schaden zu nehmen
+public void takeDamage(int amount) {
+    this.energy -= amount;
+    System.out.println("Der Vampirjäger hat " + amount + " Schaden genommen.");
+    // Wenn die Energie <= 0 ist, ist der Vampirjäger tot
+    if (this.energy <= 0) {
+        this.energy = 0; // Energie sollte nicht negativ sein
+        System.out.println("Der Vampirjäger ist tot.");
+    }
 }
+
+// Methode um zu fliehen (Vampirjäger flieht nie)
 public boolean flee() {
-    return flee();
-}
-public void alive() {
-
+    System.out.println("Ein Vampirjäger flieht nie!");
+    return false;
 }
 
+// Methode um zu prüfen, ob der Vampirjäger am Leben ist
+public boolean alive() {
+    return this.energy > 0;
 }
+}
+
