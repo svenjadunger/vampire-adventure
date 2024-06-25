@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Demon {
     private String name;
     private String vampireAbility;
+    private static Scanner scanner = new Scanner(System.in);
 
     // Konstruktor
     public Demon(String name, String vampireAbility) {
@@ -35,7 +36,6 @@ public class Demon {
         System.out.println("Ich denke an eine Zahl zwischen 1 und 10. Kannst du sie erraten?");
         
         int randomNumber = (int) (Math.random() * 10) + 1;
-        Scanner scanner = new Scanner(System.in);
         
         for (int i = 0; i < 3; i++) { // Drei Versuche
             System.out.print("Dein Tipp: ");

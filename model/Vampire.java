@@ -16,9 +16,9 @@ public class Vampire {
         this.name = name;
         this.age = age;
         this.blutgruppe = blutgruppe;
-        this.grandness = 0; // Startwert 
-        this.hunger = 0; // Startwert
-        this.energy = 10; // Startwert 
+        this.grandness = 0; 
+        this.hunger = 0; 
+        this.energy = 10; 
         this.finallyDead = false;
         this.doublePower = false;
         this.transparency = false;
@@ -165,6 +165,22 @@ public class Vampire {
         return success;
     }
 
+
+
+
+// Überschriebene toString-Methode, um die Eigenschaften des Vampirs als String zurückzugeben
+@Override
+public String toString() {
+    return "Vampir Name: " + name + "\n" +
+           "Alter: " + age + "\n" +
+           "Blutgruppe: " + blutgruppe + "\n" +
+           "Mächtigkeit: " + grandness + "\n" +
+           "Hunger: " + hunger + "\n" +
+           "Energie: " + energy + "\n" +
+           "Endgültig tot: " + finallyDead + "\n" +
+           "Doppelte Kraft: " + doublePower + "\n" +
+           "Transparenz: " + transparency;
+}
 
    
 }
