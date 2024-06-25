@@ -1,6 +1,7 @@
 package app;
 
 import java.util.Scanner;
+//um Zufallszahlen zu generieren
 import java.util.Random;
 import model.Vampire;
 
@@ -86,8 +87,7 @@ public class VampireAdventureApp {
     }
 
     private static void showBat() {
-        //This ASCII pic can be found at
-        //https://asciiart.website/index.php?art=animals/bats
+       
         System.out.println("   __       __   ____       ____");
         System.out.println("   ) \\     / (   )   \\     /   (");
         System.out.println("  )_  \\_V_/  _(   )_  \\_V_/  _(");
