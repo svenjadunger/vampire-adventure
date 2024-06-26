@@ -1,10 +1,12 @@
 package app;
-// Error handeling:
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
-//um Zufallszahlen zu generieren
 import java.util.Random;
 import model.Vampire;
+import model.VampireHunter;
+import model.Human;
+import model.Demon;
 
 /**
  * @author profMajuntke, lucaslar
@@ -167,6 +169,7 @@ public class VampireAdventureApp {
         System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round 1");
             
             int event = random.nextInt(100) + 1;
+            System.out.println("Event roll: " + event); // Debugging-Ausgabe
             if (event <= 60) {
                 meetHuman();
             } else if (event <= 80) {
@@ -191,6 +194,8 @@ public class VampireAdventureApp {
     * Begegnung mit einem Menschen. Der Benutzer kann entscheiden, ob er den Menschen angreift oder nicht.
     * Wenn der Benutzer den Menschen angreift, kann er eine bestimmte Menge Blut trinken.
     */
+    
+
     private static void meetHuman() {
         System.out.println("\nDu begegnest einem Menschen. Was möchtest du tun?");
         System.out.println("1. Mensch angreifen");
@@ -198,15 +203,31 @@ public class VampireAdventureApp {
         
         int choice = readUserInput();
         if (choice == 1) {
-        System.out.print("Wie viel Blut möchtest du trinken (0-6 Liter)? ");
-        double bloodAmount = scanner.nextDouble();
-        scanner.nextLine(); 
-        aktuellerVampir.drinkBlood(bloodAmount);
-        System.out.println("Du hast " + bloodAmount + " Liter Blut getrunken.");
+            double bloodAmount = -1;
+            while (bloodAmount < 0 || bloodAmount > 6) {
+                System.out.print("Wie viel Blut möchtest du trinken (0-6 Liter)? ");
+                try {
+                    bloodAmount = scanner.nextDouble();
+                    scanner.nextLine();
+                    if (bloodAmount < 0 || bloodAmount > 6) {
+                        System.out.println("Ungueltige Menge. Bitte geben Sie eine Menge zwischen 0 und 6 Litern ein.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
+                    scanner.nextLine();
+                }
+            }
+            aktuellerVampir.drinkBlood(bloodAmount);
+            System.out.println("Du hast " + bloodAmount + " Liter Blut getrunken.");
         } else {
-        System.out.println("Du hast den Menschen in Ruhe gelassen.");
+            System.out.println("Du hast den Menschen in Ruhe gelassen.");
         }
-        }
+    }
+
+
+
+
+
     /**
     *Begegnung mit einem Dämon. Weitere Interaktionen können hinzugefügt werden.
     */
@@ -218,39 +239,40 @@ public class VampireAdventureApp {
     *Begegnung mit einem Vampirjäger. Der Benutzer kann entscheiden, ob er flieht oder kämpft.
     *Wenn der Fluchtversuch scheitert, muss der Benutzer kämpfen.
     */
-        private static void meetVampireHunter() {
+    private static void meetVampireHunter() {
         System.out.println("\nEin Vampirjäger kreuzt deinen Weg. Deine Zeit ist gekommen...");
         System.out.println("1. Fliehen");
         System.out.println("2. Kämpfen");
         
         int choice = readUserInput();
         if (choice == 1) {
-        boolean success = aktuellerVampir.flee();
-        if (success) {
-        System.out.println("Du konntest erfolgreich fliehen.");
+            boolean success = aktuellerVampir.flee();
+            if (success) {
+                System.out.println("Du konntest erfolgreich fliehen.");
+            } else {
+                System.out.println("Fluchtversuch gescheitert. Du musst kämpfen.");
+                fightVampireHunter();
+            }
         } else {
-        System.out.println("Fluchtversuch gescheitert. Du musst kämpfen.");
-        fightVampireHunter();
+            fightVampireHunter();
         }
-        } else {
-        fightVampireHunter();
-        }
-        }
+    }
       
     /**
     *Kampf mit einem Vampirjäger. Der Vampir nimmt Schaden und kann sterben, falls er zu viel Schaden nimmt.
     *Wenn der Vampirjäger besiegt wird, wird eine entsprechende Nachricht ausgegeben.
     */
-        private static void fightVampireHunter() {
+    private static void fightVampireHunter() {
         System.out.println("Kampf beginnt...");
         aktuellerVampir.takeDamage(5);
         if (aktuellerVampir.isFinallyDead()) {
-        System.out.println("Der Vampirjäger hat dich besiegt. Spiel vorbei.");
-        aktuellerVampir = null;
+            System.out.println("Der Vampirjäger hat dich besiegt. Spiel vorbei.");
+            aktuellerVampir = null;
         } else {
-        System.out.println("Du hast den Vampirjäger besiegt.");
+            System.out.println("Du hast den Vampirjäger besiegt.");
         }
-        }        
+    }
+  
     /**
     *Beendet das Spiel und gibt eine Abschiedsnachricht aus.
     */
