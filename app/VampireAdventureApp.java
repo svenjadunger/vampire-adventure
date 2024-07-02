@@ -318,6 +318,76 @@ private static void meetDemon() {
         }
     }
   
+/**
+     * Fügt die `CountStrings`-Aufgabe hinzu. Der Spieler muss die Anzahl der "tam"-Sequenzen in einem zufälligen
+     * String innerhalb einer bestimmten Zeitspanne zählen.
+     */
+    private static void countStringsTask() {
+        System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
+        System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
+        
+        String characters = "tamrex";
+        StringBuilder generatedString = new StringBuilder();
+        Random random = new Random();
+
+        // Generiere einen zufälligen String mit "tam" und "rex"
+        for (int i = 0; i < 50; i++) {
+            generatedString.append(characters.charAt(random.nextInt(characters.length())));
+        }
+
+        String challengeString = generatedString.toString();
+        System.out.println("String: " + challengeString);
+
+        // Starte die Zeitmessung
+        long startTime = System.currentTimeMillis();
+
+        // Der Spieler hat 20 Sekunden Zeit
+        System.out.println("Du hast 20 Sekunden, um die Anzahl der 'tam'-Sequenzen zu zählen und einzugeben.");
+        System.out.print("Deine Antwort: ");
+        
+        int playerAnswer = readUserInput();
+
+        // Zeitmessung beenden
+        long endTime = System.currentTimeMillis();
+        long timeTaken = (endTime - startTime) / 1000;
+
+        // Überprüfe die richtige Antwort
+        int correctAnswer = countOccurrences(challengeString, "tam");
+
+        if (timeTaken > 20) {
+            System.out.println("Zeit abgelaufen! Du hast " + timeTaken + " Sekunden gebraucht.");
+        } else if (playerAnswer == correctAnswer) {
+            System.out.println("Richtig! Du hast die Aufgabe in " + timeTaken + " Sekunden gelöst.");
+            // Belohnung für die richtige Antwort
+            aktuellerVampir.setDoublePower(true);
+        } else {
+            System.out.println("Falsch! Die richtige Antwort war " + correctAnswer + ".");
+        }
+    }
+
+    /**
+     * Zählt die Vorkommen eines Substrings in einem String.
+     *
+     * @param str der zu durchsuchende String
+     * @param sub der zu zählende Substring
+     * @return die Anzahl der Vorkommen des Substrings
+     */
+    private static int countOccurrences(String str, String sub) {
+        int count = 0;
+        int idx = 0;
+        while ((idx = str.indexOf(sub, idx)) != -1) {
+            count++;
+            idx += sub.length();
+        }
+        return count;
+    }
+
+
+
+
+
+
+
     /**
     *Beendet das Spiel und gibt eine Abschiedsnachricht aus.
     */
