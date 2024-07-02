@@ -155,15 +155,13 @@ public class Vampire {
     }
 
     // Methode um einen Vampirjäger anzugreifen
-    public void attack(VampireHunter vh) {
-        int damage = (int) (Math.random() * 5); // Zufälliger Schaden zwischen 0 und 5
-        if (this.doublePower) {
-            damage *= 2; // Wenn doppelte Kraft, dann Schaden verdoppeln
+    public int attack(VampireHunter vh) {
+        int damage = (int) (Math.random() * 6); // Zufälliger Schaden zwischen 0 und 5
+        if (doublePower && Math.random() <= 0.5) {
+            damage *= 2; // Verdoppelt den Schaden mit einer Wahrscheinlichkeit von 50%
         }
-        System.out.println("Der Vampir verursacht " + damage + " Schaden am Vampirjäger.");
-        vh.takeDamage(damage); // Schaden dem Vampirjäger zufügen
+        return damage;
     }
-
 
     // Methode um zu fliehen
     public boolean flee() {

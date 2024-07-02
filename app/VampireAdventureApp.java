@@ -340,16 +340,17 @@ private static void reverseWordsTask() {
         System.out.println("2. Kämpfen");
         
         int choice = readUserInput();
+        VampireHunter vampireHunter = new VampireHunter("Hunter", 30); // oder den größten Vampirjäger, je nach Logik
         if (choice == 1) {
             boolean success = aktuellerVampir.flee();
             if (success) {
                 System.out.println("Du konntest erfolgreich fliehen.");
             } else {
                 System.out.println("Fluchtversuch gescheitert. Du musst kämpfen.");
-                fightVampireHunter();
+                fightVampireHunter(vampireHunter);
             }
         } else {
-            fightVampireHunter();
+            fightVampireHunter(vampireHunter);
         }
     }
       
@@ -357,17 +358,40 @@ private static void reverseWordsTask() {
     *Kampf mit einem Vampirjäger. Der Vampir nimmt Schaden und kann sterben, falls er zu viel Schaden nimmt.
     *Wenn der Vampirjäger besiegt wird, wird eine entsprechende Nachricht ausgegeben.
     */
-    private static void fightVampireHunter() {
+    private static void fightVampireHunter(VampireHunter vampireHunter) {
         System.out.println("Kampf beginnt...");
-        aktuellerVampir.takeDamage(5);
+        aktuellerVampir.takeDamage(vampireHunter.attack(aktuellerVampir));
         if (aktuellerVampir.isFinallyDead()) {
             System.out.println("Der Vampirjäger hat dich besiegt. Spiel vorbei.");
             aktuellerVampir = null;
         } else {
-            System.out.println("Du hast den Vampirjäger besiegt.");
+            vampireHunter.takeDamage(aktuellerVampir.attack(vampireHunter));
+            if (!vampireHunter.isAlive()) {
+                System.out.println("Du hast den Vampirjäger besiegt.");
+            } else {
+                System.out.println("Der Kampf geht weiter...");
+            }
         }
     }
-  
+    
+    private static void fightGreatestVampireHunter(VampireHunter vampireHunter) {
+        System.out.println("Der entscheidende Kampf beginnt...");
+        while (aktuellerVampir != null && vampireHunter.isAlive()) {
+            aktuellerVampir.takeDamage(vampireHunter.attack(aktuellerVampir));
+            if (aktuellerVampir.isFinallyDead()) {
+                System.out.println("Der größte Vampirjäger hat dich besiegt. Spiel vorbei.");
+                aktuellerVampir = null;
+                return;
+            } else {
+                vampireHunter.takeDamage(aktuellerVampir.attack(vampireHunter));
+                if (!vampireHunter.isAlive()) {
+                    System.out.println("Herzlichen Glückwunsch! Du hast den größten Vampirjäger des Jahrhunderts besiegt und das Spiel gewonnen!");
+                    System.exit(0);
+                }
+            }
+        }
+    }
+    
 /**
      * Fügt die `CountStrings`-Aufgabe hinzu. Der Spieler muss die Anzahl der "tam"-Sequenzen in einem zufälligen
      * String innerhalb einer bestimmten Zeitspanne zählen.
