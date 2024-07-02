@@ -231,10 +231,55 @@ public class VampireAdventureApp {
     /**
     *Begegnung mit einem Dämon. Weitere Interaktionen können hinzugefügt werden.
     */
-        private static void meetDemon() {
-        System.out.println("\nEin Dämon erscheint. Er fordert dich zu einem Rätsel heraus.");
        
+
+
+/**
+ * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
+ */
+private static void meetDemon() {
+    System.out.println("\n\"One of the great demons appears from the shadows...\"");
+    System.out.println("Was möchtest du tun?");
+    System.out.println("1. Mit dem Dämon sprechen");
+    System.out.println("2. Weggehen");
+
+    int choice = readUserInput();
+    if (choice == 1) {
+        System.out.println("\nDer Dämon erzählt dir seine Geschichte.");
+        System.out.println("Der Dämon fragt: \"Bist du bereit, eine Aufgabe zu erfüllen?\"");
+        System.out.println("1. Ja");
+        System.out.println("2. Nein");
+
+        int taskChoice = readUserInput();
+        if (taskChoice == 1) {
+            System.out.println("\nDer Dämon gibt dir eine Aufgabe.");
+            System.out.println("Aufgabe: Errate die Zahl, an die ich denke (zwischen 1 und 5). Du hast einen Versuch.");
+
+            int demonNumber = (int) (Math.random() * 5) + 1; // Zufällige Zahl zwischen 1 und 5
+            System.out.print("Dein Tipp: ");
+            int playerGuess = readUserInput();
+
+            if (playerGuess == demonNumber) {
+                System.out.println("Das ist richtig! Du erhältst eine besondere Fähigkeit.");
+                // Beispiel für das Hinzufügen einer Fähigkeit
+                aktuellerVampir.setDoublePower(true);
+            } else {
+                System.out.println("Das ist falsch. Der Dämon verschwindet.");
+            }
+        } else {
+            System.out.println("\nDu hast die Aufgabe abgelehnt. Der Dämon verschwindet.");
         }
+    } else {
+        System.out.println("\nDu gehst weg und der Dämon verschwindet im Nebel.");
+    }
+}
+
+
+
+
+
+
+
     /**
     *Begegnung mit einem Vampirjäger. Der Benutzer kann entscheiden, ob er flieht oder kämpft.
     *Wenn der Fluchtversuch scheitert, muss der Benutzer kämpfen.
