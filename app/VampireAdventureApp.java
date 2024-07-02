@@ -168,27 +168,29 @@ public class VampireAdventureApp {
         for (int round = 1; round <= 12; round ++) {
         System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
             
-            int event = random.nextInt(100) + 1;
-            System.out.println("Event roll: " + event); // Debugging-Ausgabe
-            if (event <= 60) {
-                meetHuman();
-            } else if (event <= 80) {
-                meetDemon();
-            } else if (event <= 90) {
-                meetVampireHunter();
-            } else {
-                System.out.println("\nNichts passiert.\n");
-            }
-    aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
-    if (aktuellerVampir.getHunger() >= 5) {
-        System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
-        aktuellerVampir = null;
-        return;
+        int event = random.nextInt(100) + 1;
+        if (event <= 60) {
+            meetHuman();
+        } else if (event <= 80) {
+            meetDemon();
+        } else if (event <= 90) {
+            meetVampireHunter();
+        } else if (round == 12) { // Am Ende der Nacht den größten Vampirjäger treffen
+            System.out.println("\nDer größte Vampirjäger des Jahrhunderts taucht auf!\n");
+            fightGreatestVampireHunter(new VampireHunter("Größter Vampirjäger", 100));
+            return; // Beenden Sie das Abenteuer nach dem entscheidenden Kampf
+        } else {
+            System.out.println("\nNichts passiert.\n");
+        }
+        aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
+        if (aktuellerVampir.getHunger() >= 5) {
+            System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
+            aktuellerVampir = null;
+            return;
+        }
+        aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
     }
-    aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
-    }
-
-    }
+}
 
     /**
     * Begegnung mit einem Menschen. Der Benutzer kann entscheiden, ob er den Menschen angreift oder nicht.
