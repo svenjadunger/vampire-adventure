@@ -166,7 +166,7 @@ public class VampireAdventureApp {
         }
 
         for (int round = 1; round <= 12; round ++) {
-        System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round 1");
+        System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
             
             int event = random.nextInt(100) + 1;
             System.out.println("Event roll: " + event); // Debugging-Ausgabe
