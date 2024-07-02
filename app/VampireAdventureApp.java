@@ -252,19 +252,23 @@ private static void meetDemon() {
 
         int taskChoice = readUserInput();
         if (taskChoice == 1) {
-            System.out.println("\nDer Dämon gibt dir eine Aufgabe.");
-            System.out.println("Aufgabe: Errate die Zahl, an die ich denke (zwischen 1 und 5). Du hast einen Versuch.");
-
-            int demonNumber = (int) (Math.random() * 5) + 1; // Zufällige Zahl zwischen 1 und 5
-            System.out.print("Dein Tipp: ");
-            int playerGuess = readUserInput();
-
-            if (playerGuess == demonNumber) {
-                System.out.println("Das ist richtig! Du erhältst eine besondere Fähigkeit.");
-                // Beispiel für das Hinzufügen einer Fähigkeit
-                aktuellerVampir.setDoublePower(true);
-            } else {
-                System.out.println("Das ist falsch. Der Dämon verschwindet.");
+            System.out.println("\nDer Dämon gibt dir eine Aufgabe:");
+            System.out.println("1. Zähle die Sequenz 'tam'");
+            System.out.println("2. Biss-Kralle-Knoblauch");
+            System.out.println("3. Rückwärts-Wörter");
+            int taskSelection = readUserInput();
+            switch (taskSelection) {
+                case 1:
+                    countStringsTask();
+                    break;
+                case 2:
+                    biteClawGarlic();
+                    break;
+                case 3:
+                    reverseWordsTask();
+                    break;
+                default:
+                    System.out.println("Ungueltige Eingabe. Der Dämon verschwindet.");
             }
         } else {
             System.out.println("\nDu hast die Aufgabe abgelehnt. Der Dämon verschwindet.");
@@ -274,6 +278,50 @@ private static void meetDemon() {
     }
 }
 
+private static void reverseWordsTask() {
+    System.out.println("\nDer Dämon stellt dir eine Aufgabe: Gebe die folgenden Wörter rückwärts ein.");
+    String[] words = {"Sonne", "Mond", "Sterne", "Vampir", "Blut", "Nacht", "Jäger", "Kampf", "Dunkel", "Schloss"};
+    Random random = new Random();
+    String[] selectedWords = new String[3];
+    for (int i = 0; i < 3; i++) {
+        selectedWords[i] = words[random.nextInt(words.length)];
+    }
+
+    for (String word : selectedWords) {
+        System.out.println("Wort: " + word);
+    }
+
+    // Starte die Zeitmessung
+    long startTime = System.currentTimeMillis();
+
+    System.out.println("Du hast 30 Sekunden, um die Wörter rückwärts einzugeben.");
+    String[] reversedWords = new String[3];
+    for (int i = 0; i < 3; i++) {
+        System.out.print("Rückwärts-Eingabe: ");
+        reversedWords[i] = scanner.nextLine();
+    }
+
+    // Zeitmessung beenden
+    long endTime = System.currentTimeMillis();
+    long timeTaken = (endTime - startTime) / 1000;
+
+    boolean allCorrect = true;
+    for (int i = 0; i < 3; i++) {
+        if (!new StringBuilder(selectedWords[i]).reverse().toString().equals(reversedWords[i])) {
+            allCorrect = false;
+            break;
+        }
+    }
+
+    if (timeTaken > 30) {
+        System.out.println("Zeit abgelaufen! Du hast " + timeTaken + " Sekunden gebraucht.");
+    } else if (allCorrect) {
+        System.out.println("Richtig! Du hast die Aufgabe in " + timeTaken + " Sekunden gelöst.");
+        aktuellerVampir.setTransparency(true);
+    } else {
+        System.out.println("Falsch! Du hast mindestens ein Wort nicht korrekt rückwärts eingegeben.");
+    }
+}
 
 
 
@@ -382,6 +430,36 @@ private static void meetDemon() {
         return count;
     }
 
+/**
+ * Fügt die `Bite-Claw-Garlic`-Aufgabe hinzu. Der Spieler muss zwischen Biss, Kralle und Knoblauch wählen,
+ * und der Computer trifft eine zufällige Wahl. Die Gewinnerin wird gemäß den Spielregeln bestimmt.
+ */
+private static void biteClawGarlic() {
+    System.out.println("\nDer Dämon fordert dich zu einer Runde Biss-Kralle-Knoblauch heraus.");
+    System.out.println("Wähle eine Option:");
+    System.out.println("1. Biss");
+    System.out.println("2. Kralle");
+    System.out.println("3. Knoblauch");
+
+    int playerChoice = readUserInput();
+    String[] choices = {"Biss", "Kralle", "Knoblauch"};
+    String playerMove = choices[playerChoice - 1];
+    String computerMove = choices[new Random().nextInt(choices.length)];
+
+    System.out.println("Du hast " + playerMove + " gewählt.");
+    System.out.println("Der Computer hat " + computerMove + " gewählt.");
+
+    if (playerMove.equals(computerMove)) {
+        System.out.println("Unentschieden! Niemand gewinnt.");
+    } else if ((playerMove.equals("Biss") && computerMove.equals("Kralle")) ||
+               (playerMove.equals("Kralle") && computerMove.equals("Knoblauch")) ||
+               (playerMove.equals("Knoblauch") && computerMove.equals("Biss"))) {
+        System.out.println("Du gewinnst! Du erhältst die Fähigkeit 'Transparency'.");
+        aktuellerVampir.setTransparency(true);
+    } else {
+        System.out.println("Der Computer gewinnt! Du verlierst diese Runde.");
+    }
+}
 
 
 
