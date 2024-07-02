@@ -29,6 +29,34 @@ public class VampireAdventureApp {
         }
     }
 
+
+/**
+     * Reads user input for the main menu and returns the chosen menu option.
+     *
+     * @return the menu option chosen by the user
+     */
+    private static int readMenuChoice() {
+        int choiceInternal = -1;
+        boolean validInput = false;
+        while (!validInput) {
+            System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (1-5):\t");
+            try {
+                choiceInternal = scanner.nextInt();
+                scanner.nextLine();
+                if (choiceInternal >= 1 && choiceInternal <= 5) {
+                    validInput = true;
+                } else {
+                    System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
+                scanner.nextLine(); // Konsumiere die ungültige Eingabe
+            }
+        }
+        return choiceInternal;
+    }
+
+
     /**
      * Reads user input from the console and returns the chosen menu option.
      *
@@ -54,6 +82,30 @@ public class VampireAdventureApp {
         }
         return choiceInternal;
     }
+
+
+/**
+     * Reads user input from the console and returns the user's answer for a task.
+     *
+     * @return the user's answer as an integer
+     */
+    private static int readUserAnswer() {
+        int answer = -1;
+        boolean validInput = false;
+        while (!validInput) {
+            System.out.print("Deine Antwort: ");
+            try {
+                answer = scanner.nextInt();
+                scanner.nextLine();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
+                scanner.nextLine(); // Konsumiere die ungültige Eingabe
+            }
+        }
+        return answer;
+    }
+
 
     /**
      * Handles the user's menu choice and executes the corresponding action.
@@ -401,7 +453,7 @@ private static void reverseWordsTask() {
     private static void countStringsTask() {
         System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
         System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
-        
+
         String characters = "tamrex";
         StringBuilder generatedString = new StringBuilder();
         Random random = new Random();
@@ -419,9 +471,8 @@ private static void reverseWordsTask() {
 
         // Der Spieler hat 20 Sekunden Zeit
         System.out.println("Du hast 20 Sekunden, um die Anzahl der 'tam'-Sequenzen zu zählen und einzugeben.");
-        System.out.print("Deine Antwort: ");
         
-        int playerAnswer = readUserInput();
+        int playerAnswer = readUserAnswer();
 
         // Zeitmessung beenden
         long endTime = System.currentTimeMillis();
@@ -440,6 +491,7 @@ private static void reverseWordsTask() {
             System.out.println("Falsch! Die richtige Antwort war " + correctAnswer + ".");
         }
     }
+
 
     /**
      * Zählt die Vorkommen eines Substrings in einem String.
