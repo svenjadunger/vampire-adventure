@@ -278,8 +278,12 @@ private static void meetDemon() {
     }
 }
 
+
+
+
 private static void reverseWordsTask() {
     System.out.println("\nDer Dämon stellt dir eine Aufgabe: Gebe die folgenden Wörter rückwärts ein.");
+    
     String[] words = {"Sonne", "Mond", "Sterne", "Vampir", "Blut", "Nacht", "Jäger", "Kampf", "Dunkel", "Schloss"};
     Random random = new Random();
     String[] selectedWords = new String[3];
@@ -322,8 +326,6 @@ private static void reverseWordsTask() {
         System.out.println("Falsch! Du hast mindestens ein Wort nicht korrekt rückwärts eingegeben.");
     }
 }
-
-
 
 
 
