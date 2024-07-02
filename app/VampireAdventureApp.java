@@ -66,23 +66,17 @@ public class VampireAdventureApp {
         int choiceInternal = -1;
         boolean validInput = false;
         while (!validInput) {
-            System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (1-5):\t");
             try {
                 choiceInternal = scanner.nextInt();
                 scanner.nextLine();
-                if (choiceInternal >= 1 && choiceInternal <= 5) {
-                    validInput = true;
-                } else {
-                    System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
-                }
+                validInput = true;
             } catch (InputMismatchException e) {
-                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.");
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
                 scanner.nextLine(); // Konsumiere die ungültige Eingabe
             }
         }
         return choiceInternal;
     }
-
 
 /**
      * Reads user input from the console and returns the user's answer for a task.
