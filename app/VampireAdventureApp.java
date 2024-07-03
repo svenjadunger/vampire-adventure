@@ -218,33 +218,35 @@ public class VampireAdventureApp {
             System.out.println("\nEs gibt keinen Vampir, mit dem man ein Abenteuer starten kann.\n");
             return;
         }
-
-        for (int round = 1; round <= 12; round ++) {
-        System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
+    
+        for (int round = 1; round <= 12; round++) {
+            System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
             
-        int event = random.nextInt(100) + 1;
-        if (event <= 60) {
-            meetHuman();
-        } else if (event <= 80) {
-            meetDemon();
-        } else if (event <= 90) {
-            meetVampireHunter();
-        } else if (round == 12) { // Am Ende der Nacht den größten Vampirjäger treffen
-            System.out.println("\nDer größte Vampirjäger des Jahrhunderts taucht auf!\n");
-            fightGreatestVampireHunter(new VampireHunter("Größter Vampirjäger", 100));
-            return; // Beenden Sie das Abenteuer nach dem entscheidenden Kampf
-        } else {
-            System.out.println("\nNichts passiert.\n");
+            int event = random.nextInt(100) + 1;
+            if (event <= 60) {
+                meetHuman();
+            } else if (event <= 80) {
+                meetDemon();
+            } else if (event <= 90) {
+                meetVampireHunter();
+            } else if (round == 12) { // Am Ende der Nacht den größten Vampirjäger treffen
+                System.out.println("\nDer größte Vampirjäger des Jahrhunderts taucht auf!\n");
+                fightGreatestVampireHunter(new VampireHunter("Größter Vampirjäger", 100));
+                return; // Beenden Sie das Abenteuer nach dem entscheidenden Kampf
+            } else {
+                System.out.println("\nNichts passiert.\n");
+            }
+            aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
+            if (aktuellerVampir.getHunger() >= 5) {
+                System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
+                aktuellerVampir = null;
+                System.out.println("Spiel vorbei.");
+                return;
+            }
+            aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
         }
-        aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
-        if (aktuellerVampir.getHunger() >= 5) {
-            System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
-            aktuellerVampir = null;
-            return;
-        }
-        aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
+        System.out.println("Das Abenteuer ist zu Ende. Die Nacht bricht an.");
     }
-}
 
     /**
     * Begegnung mit einem Menschen. Der Benutzer kann entscheiden, ob er den Menschen angreift oder nicht.
@@ -439,7 +441,7 @@ private static void reverseWordsTask() {
             if (aktuellerVampir.isFinallyDead()) {
                 System.out.println("Der größte Vampirjäger hat dich besiegt. Spiel vorbei.");
                 aktuellerVampir = null;
-                return;
+                System.exit(0);
             } else {
                 vampireHunter.takeDamage(aktuellerVampir.attack(vampireHunter));
                 if (!vampireHunter.isAlive()) {
@@ -449,6 +451,7 @@ private static void reverseWordsTask() {
             }
         }
     }
+    
     
 /**
      * Fügt die `CountStrings`-Aufgabe hinzu. Der Spieler muss die Anzahl der "tam"-Sequenzen in einem zufälligen
