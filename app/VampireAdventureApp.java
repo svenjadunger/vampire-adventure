@@ -23,7 +23,7 @@ public class VampireAdventureApp {
         showBat();
         while (true) {
             showMenu();
-            int choice = readUserInput();
+            int choice = readMenuChoice();
             handle(choice);
             System.out.println("====================");
         }
@@ -62,21 +62,27 @@ public class VampireAdventureApp {
      *
      * @return the menu option chosen by the user
      */
-    private static int readUserInput() {
+    private static int readUserInput(int min, int max) {
         int choiceInternal = -1;
         boolean validInput = false;
         while (!validInput) {
+            System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (" + min + "-" + max + "):\t");
             try {
                 choiceInternal = scanner.nextInt();
                 scanner.nextLine();
-                validInput = true;
+                if (choiceInternal >= min && choiceInternal <= max) {
+                    validInput = true;
+                } else {
+                    System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen " + min + " und " + max + " ein.");
+                }
             } catch (InputMismatchException e) {
-                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine Zahl zwischen " + min + " und " + max + " ein.");
                 scanner.nextLine(); // Konsumiere die ungültige Eingabe
             }
         }
         return choiceInternal;
     }
+    
 
 /**
      * Reads user input from the console and returns the user's answer for a task.
@@ -147,6 +153,8 @@ public class VampireAdventureApp {
         for (String menuItem : menuItems) {
             System.out.println(menuItem);
         }
+
+     
     }
 
     private static void showBat() {
@@ -249,7 +257,8 @@ public class VampireAdventureApp {
         System.out.println("1. Mensch angreifen");
         System.out.println("2. Nichts tun");
         
-        int choice = readUserInput();
+        
+    int choice = readUserInput(1, 2);
         if (choice == 1) {
             double bloodAmount = -1;
             while (bloodAmount < 0 || bloodAmount > 6) {
@@ -291,20 +300,21 @@ private static void meetDemon() {
     System.out.println("1. Mit dem Dämon sprechen");
     System.out.println("2. Weggehen");
 
-    int choice = readUserInput();
+    
+    int choice = readUserInput(1, 2);
     if (choice == 1) {
         System.out.println("\nDer Dämon erzählt dir seine Geschichte.");
         System.out.println("Der Dämon fragt: \"Bist du bereit, eine Aufgabe zu erfüllen?\"");
         System.out.println("1. Ja");
         System.out.println("2. Nein");
 
-        int taskChoice = readUserInput();
+        int taskChoice = readUserInput(1,2);
         if (taskChoice == 1) {
             System.out.println("\nDer Dämon gibt dir eine Aufgabe:");
             System.out.println("1. Zähle die Sequenz 'tam'");
             System.out.println("2. Biss-Kralle-Knoblauch");
             System.out.println("3. Rückwärts-Wörter");
-            int taskSelection = readUserInput();
+            int taskSelection = readUserInput(1,3);
             switch (taskSelection) {
                 case 1:
                     countStringsTask();
@@ -387,7 +397,7 @@ private static void reverseWordsTask() {
         System.out.println("1. Fliehen");
         System.out.println("2. Kämpfen");
         
-        int choice = readUserInput();
+        int choice = readUserInput(1,2);
         VampireHunter vampireHunter = new VampireHunter("Hunter", 30); // oder den größten Vampirjäger, je nach Logik
         if (choice == 1) {
             boolean success = aktuellerVampir.flee();
@@ -515,7 +525,7 @@ private static void biteClawGarlic() {
     System.out.println("2. Kralle");
     System.out.println("3. Knoblauch");
 
-    int playerChoice = readUserInput();
+    int playerChoice = readUserInput(1,3);
     String[] choices = {"Biss", "Kralle", "Knoblauch"};
     String playerMove = choices[playerChoice - 1];
     String computerMove = choices[new Random().nextInt(choices.length)];
