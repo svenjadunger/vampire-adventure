@@ -98,6 +98,8 @@ public class Vampire {
     }
 
     // Methoden
+
+    
     // Methode zum Angreifen eines Menschen
     public void attackHuman(Human human) {
         System.out.println("Der Vampir greift einen Menschen an.");

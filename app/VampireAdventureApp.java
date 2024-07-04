@@ -232,7 +232,7 @@ public class VampireAdventureApp {
             } else if (round == 12) { // Am Ende der Nacht den größten Vampirjäger treffen
                 System.out.println("\nDer größte Vampirjäger des Jahrhunderts taucht auf!\n");
                 fightGreatestVampireHunter(new VampireHunter("Größter Vampirjäger", 100));
-                return; // Beenden Sie das Abenteuer nach dem entscheidenden Kampf
+                return; // Beenden das Abenteuer nach Kampf
             } else {
                 System.out.println("\nNichts passiert.\n");
             }
@@ -285,14 +285,6 @@ public class VampireAdventureApp {
 
 
 
-
-
-    /**
-    *Begegnung mit einem Dämon. Weitere Interaktionen können hinzugefügt werden.
-    */
-       
-
-
 /**
  * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
  */
@@ -340,7 +332,9 @@ private static void meetDemon() {
 
 
 
-
+/**
+ * Aufgabe, bei der man innerhalb von 30 Sekunden folgende Wörter rückwarts korrekt eingeben muss
+ */
 private static void reverseWordsTask() {
     System.out.println("\nDer Dämon stellt dir eine Aufgabe: Gebe die folgenden Wörter rückwärts ein.");
     
@@ -400,7 +394,7 @@ private static void reverseWordsTask() {
         System.out.println("2. Kämpfen");
         
         int choice = readUserInput(1,2);
-        VampireHunter vampireHunter = new VampireHunter("Hunter", 30); // oder den größten Vampirjäger, je nach Logik
+        VampireHunter vampireHunter = new VampireHunter("Hunter", 30); 
         if (choice == 1) {
             boolean success = aktuellerVampir.flee();
             if (success) {
@@ -465,7 +459,7 @@ private static void reverseWordsTask() {
         StringBuilder generatedString = new StringBuilder();
         Random random = new Random();
 
-        // Generiere einen zufälligen String mit "tam" und "rex"
+        // Generiert einen zufälligen String mit "tam" und "rex"
         for (int i = 0; i < 50; i++) {
             generatedString.append(characters.charAt(random.nextInt(characters.length())));
         }
@@ -485,7 +479,7 @@ private static void reverseWordsTask() {
         long endTime = System.currentTimeMillis();
         long timeTaken = (endTime - startTime) / 1000;
 
-        // Überprüfe die richtige Antwort
+       
         int correctAnswer = countOccurrences(challengeString, "tam");
 
         if (timeTaken > 20) {
