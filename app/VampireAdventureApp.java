@@ -431,20 +431,38 @@ private static void reverseWordsTask() {
     private static void fightGreatestVampireHunter(VampireHunter vampireHunter) {
         System.out.println("Der entscheidende Kampf beginnt...");
         while (aktuellerVampir != null && vampireHunter.isAlive()) {
+            System.out.println("\nDer Vampirjäger greift an.");
             aktuellerVampir.takeDamage(vampireHunter.attack(aktuellerVampir));
             if (aktuellerVampir.isFinallyDead()) {
                 System.out.println("Der größte Vampirjäger hat dich besiegt. Spiel vorbei.");
                 aktuellerVampir = null;
                 System.exit(0);
             } else {
-                vampireHunter.takeDamage(aktuellerVampir.attack(vampireHunter));
-                if (!vampireHunter.isAlive()) {
-                    System.out.println("Herzlichen Glückwunsch! Du hast den größten Vampirjäger des Jahrhunderts besiegt und das Spiel gewonnen!");
-                    System.exit(0);
+                System.out.println("Deine Energie: " + aktuellerVampir.getEnergy());
+                System.out.println("Energie des Vampirjägers: " + vampireHunter.getEnergy());
+                System.out.println("1. Angreifen");
+                System.out.println("2. Fliehen");
+    
+                int choice = readUserInput(1, 2);
+                if (choice == 1) {
+                    vampireHunter.takeDamage(aktuellerVampir.attack(vampireHunter));
+                    if (!vampireHunter.isAlive()) {
+                        System.out.println("Herzlichen Glückwunsch! Du hast den größten Vampirjäger des Jahrhunderts besiegt und das Spiel gewonnen!");
+                        System.exit(0);
+                    }
+                } else {
+                    boolean success = aktuellerVampir.flee();
+                    if (success) {
+                        System.out.println("Du konntest erfolgreich fliehen.");
+                        return; // Beenden des Kampfes
+                    } else {
+                        System.out.println("Fluchtversuch gescheitert. Du musst weiter kämpfen.");
+                    }
                 }
             }
         }
     }
+    
     
     
 /**
