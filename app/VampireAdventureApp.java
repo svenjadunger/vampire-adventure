@@ -24,10 +24,46 @@ public class VampireAdventureApp {
         while (true) {
             showMenu();
             int choice = readMenuChoice();
-            handle(choice);
+            if (choice == 0) { // Wahl für den Test der Ereignisverteilung
+                testEventDistribution();
+            } else {
+                handle(choice);
+            }
             System.out.println("====================");
         }
     }
+
+
+
+/**
+     * Methode zur Überprüfung der Verteilung der Ereignisse
+     */
+    public static void testEventDistribution() {
+        int humanCount = 0;
+        int demonCount = 0;
+        int hunterCount = 0;
+        int nothingCount = 0;
+
+        for (int i = 0; i < 1000; i++) {
+            int event = random.nextInt(100) + 1;
+            if (event <= 60) {
+                humanCount++;
+            } else if (event <= 80) {
+                demonCount++;
+            } else if (event <= 90) {
+                hunterCount++;
+            } else {
+                nothingCount++;
+            }
+        }
+
+        System.out.println("Menschen: " + humanCount);
+        System.out.println("Dämonen: " + demonCount);
+        System.out.println("VampireHunter: " + hunterCount);
+        System.out.println("Nichts passiert: " + nothingCount);
+    }
+
+
 
 
 /**
