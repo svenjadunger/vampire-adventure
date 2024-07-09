@@ -378,7 +378,7 @@ private static void reverseWordsTask() {
     Random random = new Random();
     String[] selectedWords = new String[3];
     for (int i = 0; i < 3; i++) {
-        selectedWords[i] = words[random.nextInt(words.length)];
+        selectedWords[i] = words[random.nextInt(words.length)]; //zufällig zw 0-9
     }
 
     for (String word : selectedWords) {
@@ -386,7 +386,7 @@ private static void reverseWordsTask() {
     }
 
     // Starte die Zeitmessung
-    long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis(); //millisekunden
 
     System.out.println("Du hast 30 Sekunden, um die Wörter rückwärts einzugeben.");
     String[] reversedWords = new String[3];
@@ -397,7 +397,7 @@ private static void reverseWordsTask() {
 
     // Zeitmessung beenden
     long endTime = System.currentTimeMillis();
-    long timeTaken = (endTime - startTime) / 1000;
+    long timeTaken = (endTime - startTime) / 1000; //sekunden
 
     boolean allCorrect = true;
     for (int i = 0; i < 3; i++) {
@@ -405,7 +405,7 @@ private static void reverseWordsTask() {
             allCorrect = false;
             break;
         }
-    }
+    } //stringbuilder(zeichen ändern) objekt enthält selectedwords, umkehren,tostring verwandelt,vergleich umgekehrte wörter
 
     if (timeTaken > 30) {
         System.out.println("Zeit abgelaufen! Du hast " + timeTaken + " Sekunden gebraucht.");
@@ -450,6 +450,7 @@ private static void reverseWordsTask() {
     */
     private static void fightVampireHunter(VampireHunter vampireHunter) {
         System.out.println("Kampf beginnt...");
+        // angriff und schaden wird zurückgegeben, pbjekt wird reduziert um lebenspunkte
         aktuellerVampir.takeDamage(vampireHunter.attack(aktuellerVampir));
         if (aktuellerVampir.isFinallyDead()) {
             System.out.println("Der Vampirjäger hat dich besiegt. Spiel vorbei.");
@@ -468,6 +469,7 @@ private static void reverseWordsTask() {
         System.out.println("Der entscheidende Kampf beginnt...");
         while (aktuellerVampir != null && vampireHunter.isAlive()) {
             System.out.println("\nDer Vampirjäger greift an.");
+            //vampirejäger greift vampir an und vampir nimmt schaden
             aktuellerVampir.takeDamage(vampireHunter.attack(aktuellerVampir));
             if (aktuellerVampir.isFinallyDead()) {
                 System.out.println("Der größte Vampirjäger hat dich besiegt. Spiel vorbei.");
@@ -510,14 +512,16 @@ private static void reverseWordsTask() {
         System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
 
         String characters = "tamrex";
+        //objekt um zufälligen string zu erstellen
         StringBuilder generatedString = new StringBuilder();
         Random random = new Random();
 
         // Generiert einen zufälligen String mit "tam" und "rex"
+        //zufälliges zeichen wird zu generatedstring hinzugefügt, randomnextint gibt zufälligen index zwischen 0 u. d. Länge von character zurück, charat fügt zeichen zu stringbuilder
         for (int i = 0; i < 50; i++) {
             generatedString.append(characters.charAt(random.nextInt(characters.length())));
         }
-
+//konvertierung in string
         String challengeString = generatedString.toString();
         System.out.println("String: " + challengeString);
 
@@ -555,12 +559,19 @@ private static void reverseWordsTask() {
      * @param sub der zu zählende Substring
      * @return die Anzahl der Vorkommen des Substrings
      */
+
+     //str zu suchen, sub zu zählender string
     private static int countOccurrences(String str, String sub) {
+        //zählt substrings= tam
         int count = 0;
+        //hält die aktuelle position im hauptstring
         int idx = 0;
+        //sucht tam im string und zählt wie oft sie vorkommt; 
         while ((idx = str.indexOf(sub, idx)) != -1) {
             count++;
+            //+1 wenn substring gefunden wurde
             idx += sub.length();
+            //erhöht länge substring
         }
         return count;
     }
