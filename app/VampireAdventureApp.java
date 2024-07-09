@@ -5,8 +5,7 @@ import java.util.Scanner;
 import java.util.Random;
 import model.Vampire;
 import model.VampireHunter;
-import model.Human;
-import model.Demon;
+
 
 /**
  * @author profMajuntke, lucaslar
@@ -202,22 +201,45 @@ public class VampireAdventureApp {
         System.out.println("       `-'             `-'");
     }
 
-    /**
-    * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
-    * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
-    */
-    private static void createVampire() {
+ /**
+ * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
+ * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
+ */
+/**
+ * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
+ * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
+ */
+private static void createVampire() {
+    String name = "";
+    while (name.isEmpty() || name.matches("\\d+")) {
         System.out.print("Geben Sie den Namen des Vampirs ein: ");
-        String name = scanner.nextLine();
-        System.out.print("Geben Sie das Alter des Vampirs ein: ");
-        int alter = scanner.nextInt();
-        scanner.nextLine(); 
-        System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
-        String blutgruppe = scanner.nextLine();
-
-        aktuellerVampir = new Vampire(name, alter, blutgruppe);
-        System.out.println("\nVampir erfolgreich erstellt!\n");
+        name = scanner.nextLine();
+        if (name.isEmpty() || name.matches("\\d+")) {
+            System.out.println("Ungueltige Eingabe. Der Name darf nicht leer sein und keine Zahlen enthalten.");
+        }
     }
+
+    int alter = -1;
+    while (alter < 0) {
+        System.out.print("Geben Sie das Alter des Vampirs ein: ");
+        try {
+            alter = scanner.nextInt();
+            scanner.nextLine();
+            if (alter < 0) {
+                System.out.println("Ungueltige Eingabe. Bitte geben Sie eine positive Zahl ein.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
+            scanner.nextLine(); // Konsumiere die ungültige Eingabe
+        }
+    }
+
+    System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
+    String blutgruppe = scanner.nextLine();
+
+    aktuellerVampir = new Vampire(name, alter, blutgruppe);
+    System.out.println("\nVampir erfolgreich erstellt!\n");
+}
 
     /**
     * Zeigt die Daten des aktuellen Vampirs an, wenn einer existiert.
@@ -502,85 +524,67 @@ private static void reverseWordsTask() {
     }
     
     
-    
+ /**
+ * Fügt die `CountStrings`-Aufgabe hinzu. Der Spieler muss die Anzahl der "tam"-Sequenzen in einem zufälligen
+ * String innerhalb einer bestimmten Zeitspanne zählen.
+ */
+private static void countStringsTask() {
+    System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
+    System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
+
+    String characters = "tamrex";
+    String generatedString = "";
+    Random random = new Random();
+
+    // Generiert einen zufälligen String mit "tam" und "rex"
+    for (int i = 0; i < 50; i++) {
+        generatedString += characters.charAt(random.nextInt(characters.length()));
+    }
+
+    System.out.println("String: " + generatedString);
+
+    // Starte die Zeitmessung
+    long startTime = System.currentTimeMillis();
+
+    // Der Spieler hat 20 Sekunden Zeit
+    System.out.println("Du hast 20 Sekunden, um die Anzahl der 'tam'-Sequenzen zu zählen und einzugeben.");
+
+    int playerAnswer = readUserAnswer();
+
+    // Zeitmessung beenden
+    long endTime = System.currentTimeMillis();
+    long timeTaken = (endTime - startTime) / 1000;
+
+    int correctAnswer = countOccurrences(generatedString, "tam");
+
+    if (timeTaken > 20) {
+        System.out.println("Zeit abgelaufen! Du hast " + timeTaken + " Sekunden gebraucht.");
+    } else if (playerAnswer == correctAnswer) {
+        System.out.println("Richtig! Du hast die Aufgabe in " + timeTaken + " Sekunden gelöst.");
+        // Belohnung für die richtige Antwort
+        aktuellerVampir.setDoublePower(true);
+    } else {
+        System.out.println("Falsch! Die richtige Antwort war " + correctAnswer + ".");
+    }
+}
+
 /**
-     * Fügt die `CountStrings`-Aufgabe hinzu. Der Spieler muss die Anzahl der "tam"-Sequenzen in einem zufälligen
-     * String innerhalb einer bestimmten Zeitspanne zählen.
-     */
-    private static void countStringsTask() {
-        System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
-        System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
-//characters enthält zeichen tamrex
-        String characters = "tamrex";
-        //objekt um zufälligen string zu erstellen
-        //generatedstring ist ein stringbuilder objekt, um zufälligen string zusammenzusetzen
-        StringBuilder generatedString = new StringBuilder();
-        Random random = new Random();
+ * Zählt die Vorkommen eines Substrings in einem String.
+ *
+ * @param str der zu durchsuchende String
+ * @param sub der zu zählende Substring
+ * @return die Anzahl der Vorkommen des Substrings
+ */
+private static int countOccurrences(String str, String sub) {
+    int count = 0;
+    int idx = 0;
 
-        // Generiert einen zufälligen String mit "tam" und "rex"
-        //zufälliges zeichen wird zu generatedstring hinzugefügt, randomnextint gibt zufälligen index zwischen 0 u. d. Länge von character zurück, charat gibt zeichen an der zufälligen position in characterstring zurücl
-        for (int i = 0; i < 50; i++) {
-            generatedString.append(characters.charAt(random.nextInt(characters.length())));
-        }
-//konvertierung in string
-        String challengeString = generatedString.toString();
-        System.out.println("String: " + challengeString);
-
-        // Starte die Zeitmessung
-        long startTime = System.currentTimeMillis();
-
-        // Der Spieler hat 20 Sekunden Zeit
-        System.out.println("Du hast 20 Sekunden, um die Anzahl der 'tam'-Sequenzen zu zählen und einzugeben.");
-        
-        int playerAnswer = readUserAnswer();
-
-        // Zeitmessung beenden
-        long endTime = System.currentTimeMillis();
-        long timeTaken = (endTime - startTime) / 1000;
-
-       
-        int correctAnswer = countOccurrences(challengeString, "tam");
-
-        if (timeTaken > 20) {
-            System.out.println("Zeit abgelaufen! Du hast " + timeTaken + " Sekunden gebraucht.");
-        } else if (playerAnswer == correctAnswer) {
-            System.out.println("Richtig! Du hast die Aufgabe in " + timeTaken + " Sekunden gelöst.");
-            // Belohnung für die richtige Antwort
-            aktuellerVampir.setDoublePower(true);
-        } else {
-            System.out.println("Falsch! Die richtige Antwort war " + correctAnswer + ".");
-        }
+    while ((idx = str.indexOf(sub, idx)) != -1) {
+        count++;
+        idx += sub.length();
     }
-
-
-    /**
-     * Zählt die Vorkommen eines Substrings in einem String.
-     *
-     * @param str der zu durchsuchende String
-     * @param sub der zu zählende Substring
-     * @return die Anzahl der Vorkommen des Substrings
-     */
-
-     //str zu suchen, sub zu zählender string
-     //str= gesamter zu durchsende string, in dem wir nach substring suchen(tamrex)
-     //der substring, den wir im string str zählen, bei uns: tam
-    private static int countOccurrences(String str, String sub) {
-        //zählt substrings= tam
-        int count = 0;
-        // startposition suche
-        int idx = 0;
-
-        //sucht tam im string und zählt wie oft sie vorkommt; solange vorkommen substring
-        while ((idx = str.indexOf(sub, idx)) != -1) {
-            count++;
-            //sucht nach 1. tam und beginnt bei idx
-            //wenn nicht findet -1
-            //+1 wenn substring gefunden wurde
-            idx += sub.length();
-            //erhöht länge substring, postition für nächste suche
-        }
-        return count;
-    }
+    return count;
+}
 
 /**
  * Fügt die `Bite-Claw-Garlic`-Aufgabe hinzu. Der Spieler muss zwischen Biss, Kralle und Knoblauch wählen,
