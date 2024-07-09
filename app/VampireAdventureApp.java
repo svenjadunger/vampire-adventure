@@ -510,14 +510,15 @@ private static void reverseWordsTask() {
     private static void countStringsTask() {
         System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
         System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
-
+//characters enthält zeichen tamrex
         String characters = "tamrex";
         //objekt um zufälligen string zu erstellen
+        //generatedstring ist ein stringbuilder objekt, um zufälligen string zusammenzusetzen
         StringBuilder generatedString = new StringBuilder();
         Random random = new Random();
 
         // Generiert einen zufälligen String mit "tam" und "rex"
-        //zufälliges zeichen wird zu generatedstring hinzugefügt, randomnextint gibt zufälligen index zwischen 0 u. d. Länge von character zurück, charat fügt zeichen zu stringbuilder
+        //zufälliges zeichen wird zu generatedstring hinzugefügt, randomnextint gibt zufälligen index zwischen 0 u. d. Länge von character zurück, charat gibt zeichen an der zufälligen position in characterstring zurücl
         for (int i = 0; i < 50; i++) {
             generatedString.append(characters.charAt(random.nextInt(characters.length())));
         }
@@ -561,17 +562,22 @@ private static void reverseWordsTask() {
      */
 
      //str zu suchen, sub zu zählender string
+     //str= gesamter zu durchsende string, in dem wir nach substring suchen(tamrex)
+     //der substring, den wir im string str zählen, bei uns: tam
     private static int countOccurrences(String str, String sub) {
         //zählt substrings= tam
         int count = 0;
-        //hält die aktuelle position im hauptstring
+        // startposition suche
         int idx = 0;
-        //sucht tam im string und zählt wie oft sie vorkommt; 
+
+        //sucht tam im string und zählt wie oft sie vorkommt; solange vorkommen substring
         while ((idx = str.indexOf(sub, idx)) != -1) {
             count++;
+            //sucht nach 1. tam und beginnt bei idx
+            //wenn nicht findet -1
             //+1 wenn substring gefunden wurde
             idx += sub.length();
-            //erhöht länge substring
+            //erhöht länge substring, postition für nächste suche
         }
         return count;
     }
@@ -589,6 +595,7 @@ private static void biteClawGarlic() {
 
     int playerChoice = readUserInput(1,3);
     String[] choices = {"Biss", "Kralle", "Knoblauch"};
+    // playerChoice = 1 entspricht choices[0] (also "Biss").
     String playerMove = choices[playerChoice - 1];
     String computerMove = choices[new Random().nextInt(choices.length)];
 
