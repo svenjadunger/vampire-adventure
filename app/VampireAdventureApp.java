@@ -78,7 +78,6 @@ public class VampireAdventureApp {
 
 
 
-
 /**
      * Reads user input for the main menu and returns the chosen menu option.
      *
