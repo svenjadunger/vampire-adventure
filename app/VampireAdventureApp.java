@@ -222,21 +222,41 @@ public class VampireAdventureApp {
     }
 
     /**
-    * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
-    * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
-    */
-    private static void createVampire() {
+ * Erstellt einen neuen Vampir und speichert ihn in der Variable 'aktuellerVampir'.
+ * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
+ */
+private static void createVampire() {
+    String name;
+    while (true) {
         System.out.print("Geben Sie den Namen des Vampirs ein: ");
-        String name = scanner.nextLine();
-        System.out.print("Geben Sie das Alter des Vampirs ein: ");
-        int alter = scanner.nextInt();
-        scanner.nextLine(); 
-        System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
-        String blutgruppe = scanner.nextLine();
-
-        aktuellerVampir = new Vampire(name, alter, blutgruppe);
-        System.out.println("\nVampir erfolgreich erstellt!\n");
+        name = scanner.nextLine();
+        if (!name.matches(".*\\d.*")) { // Überprüft, ob der Name keine Zahlen enthält
+            break;
+        }
+        System.out.println("Ungueltige Eingabe. Der Name darf keine Zahlen enthalten.");
     }
+
+    int alter;
+    while (true) {
+        System.out.print("Geben Sie das Alter des Vampirs ein: ");
+        if (scanner.hasNextInt()) {
+            alter = scanner.nextInt();
+            scanner.nextLine(); // Konsumiert die Zeile, um Scanner-Probleme zu vermeiden
+            break;
+        } else {
+            System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
+            scanner.nextLine(); // Konsumiert die ungültige Eingabe
+        }
+    }
+
+    System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
+    String blutgruppe = scanner.nextLine();
+
+    aktuellerVampir = new Vampire(name, alter, blutgruppe);
+    System.out.println("\nVampir erfolgreich erstellt!\n");
+}
+
+
 
     /**
     * Zeigt die Daten des aktuellen Vampirs an, wenn einer existiert.
@@ -349,13 +369,15 @@ public class VampireAdventureApp {
 /**
  * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
  */
+/**
+ * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
+ */
 private static void meetDemon() {
     System.out.println("\n\"One of the great demons appears from the shadows...\"");
     System.out.println("Was möchtest du tun?");
     System.out.println("1. Mit dem Dämon sprechen");
     System.out.println("2. Weggehen");
 
-    
     int choice = readUserInput(1, 2);
     if (choice == 1) {
         System.out.println("\nDer Dämon erzählt dir seine Geschichte.");
@@ -363,13 +385,11 @@ private static void meetDemon() {
         System.out.println("1. Ja");
         System.out.println("2. Nein");
 
-        int taskChoice = readUserInput(1,2);
+        int taskChoice = readUserInput(1, 2);
         if (taskChoice == 1) {
-            System.out.println("\nDer Dämon gibt dir eine Aufgabe:");
-            System.out.println("1. Zähle die Sequenz 'tam'");
-            System.out.println("2. Biss-Kralle-Knoblauch");
-            System.out.println("3. Rückwärts-Wörter");
-            int taskSelection = readUserInput(1,3);
+            // Zufällige Auswahl einer Aufgabe
+            Random random = new Random();
+            int taskSelection = random.nextInt(3) + 1; // Zufällige Zahl zwischen 1 und 3
             switch (taskSelection) {
                 case 1:
                     countStringsTask();
@@ -380,8 +400,6 @@ private static void meetDemon() {
                 case 3:
                     reverseWordsTask();
                     break;
-                default:
-                    System.out.println("Ungueltige Eingabe. Der Dämon verschwindet.");
             }
         } else {
             System.out.println("\nDu hast die Aufgabe abgelehnt. Der Dämon verschwindet.");
@@ -390,6 +408,7 @@ private static void meetDemon() {
         System.out.println("\nDu gehst weg und der Dämon verschwindet im Nebel.");
     }
 }
+
 
 
 
