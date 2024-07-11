@@ -226,36 +226,34 @@ public class VampireAdventureApp {
  * Fordert den Benutzer zur Eingabe des Namens, des Alters und der Blutgruppe des Vampirs auf.
  */
 private static void createVampire() {
-    String name;
-    while (true) {
-        System.out.print("Geben Sie den Namen des Vampirs ein: ");
+    String name = "";
+    int age = -1;
+    String bloodType = "";
+
+    while (name.isEmpty() || name.matches(".*\\d.*")) {
+        System.out.print("Geben Sie den Namen des Vampirs ein (Zahlen nicht erlaubt): ");
         name = scanner.nextLine();
-        if (!name.matches(".*\\d.*")) { // Überprüft, ob der Name keine Zahlen enthält
-            break;
-        }
-        System.out.println("Ungueltige Eingabe. Der Name darf keine Zahlen enthalten.");
     }
 
-    int alter;
-    while (true) {
-        System.out.print("Geben Sie das Alter des Vampirs ein: ");
-        if (scanner.hasNextInt()) {
-            alter = scanner.nextInt();
-            scanner.nextLine(); // Konsumiert die Zeile, um Scanner-Probleme zu vermeiden
-            break;
-        } else {
+    while (age <= 0) {
+        System.out.print("Geben Sie das Alter des Vampirs ein (Zahl > 0 bitte!): ");
+        try {
+            age = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
             System.out.println("Ungueltige Eingabe. Bitte geben Sie eine gültige Zahl ein.");
-            scanner.nextLine(); // Konsumiert die ungültige Eingabe
+            scanner.nextLine(); // Konsumiere die ungültige Eingabe
         }
     }
 
-    System.out.print("Geben Sie die Blutgruppe des Vampirs ein: ");
-    String blutgruppe = scanner.nextLine();
+    while (bloodType.isEmpty() || bloodType.length() > 2 || bloodType.matches(".*\\d.*")) {
+        System.out.print("Geben Sie die Blutgruppe des Vampirs ein (keine Zahlen, bitte max. 2 Zeichen, danke!): ");
+        bloodType = scanner.nextLine();
+    }
 
-    aktuellerVampir = new Vampire(name, alter, blutgruppe);
+    aktuellerVampir = new Vampire(name, age, bloodType);
     System.out.println("\nVampir erfolgreich erstellt!\n");
 }
-
 
 
     /**
@@ -296,8 +294,7 @@ private static void createVampire() {
     
         for (int round = 1; round <= 12; round++) {
             System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
-            
-            // zufallszahl zwischen 0 und 99 + 1, also 1 bis 100
+    
             int event = random.nextInt(100) + 1;
             if (event <= 60) {
                 meetHuman();
@@ -312,20 +309,20 @@ private static void createVampire() {
             } else {
                 System.out.println("\nNichts passiert.\n");
             }
-            // nach jeden Ereignis wird hunger des Vampirs um 1 erhöht
             aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
             if (aktuellerVampir.getHunger() >= 5) {
                 System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
-                aktuellerVampir = null; // Spiel zu Ende
+                aktuellerVampir = null;
                 System.out.println("Spiel vorbei.");
+                demonEncounterCount = 0; // Reset demon encounter count when game ends
                 return;
             }
-            // die Energie erhöht sich nach jeder Runde um 10 Punkte
             aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
         }
         System.out.println("Das Abenteuer ist zu Ende. Die Nacht bricht an.");
+        demonEncounterCount = 0; // Reset demon encounter count at the end of adventure
     }
-
+    
     /**
     * Begegnung mit einem Menschen. Der Benutzer kann entscheiden, ob er den Menschen angreift oder nicht.
     * Wenn der Benutzer den Menschen angreift, kann er eine bestimmte Menge Blut trinken.
@@ -365,10 +362,11 @@ private static void createVampire() {
     }
 
 
+// Zählt die Anzahl der Dämonenbegegnungen
 
-/**
- * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
- */
+private static int demonEncounterCount = 0; // Zählt die Anzahl der Dämonenbegegnungen
+
+
 /**
  * Begegnung mit einem Dämon. Der Spieler kann mit dem Dämon sprechen oder sich entfernen.
  */
@@ -387,19 +385,14 @@ private static void meetDemon() {
 
         int taskChoice = readUserInput(1, 2);
         if (taskChoice == 1) {
-            // Zufällige Auswahl einer Aufgabe
-            Random random = new Random();
-            int taskSelection = random.nextInt(3) + 1; // Zufällige Zahl zwischen 1 und 3
-            switch (taskSelection) {
-                case 1:
-                    countStringsTask();
-                    break;
-                case 2:
-                    biteClawGarlic();
-                    break;
-                case 3:
-                    reverseWordsTask();
-                    break;
+            demonEncounterCount++;
+            if (demonEncounterCount == 1) {
+                countStringsTask();
+            } else if (demonEncounterCount == 2) {
+                biteClawGarlic();
+            } else if (demonEncounterCount == 3) {
+                reverseWordsTask();
+                demonEncounterCount = 0; // Zurücksetzen nach der dritten Begegnung
             }
         } else {
             System.out.println("\nDu hast die Aufgabe abgelehnt. Der Dämon verschwindet.");
@@ -408,6 +401,8 @@ private static void meetDemon() {
         System.out.println("\nDu gehst weg und der Dämon verschwindet im Nebel.");
     }
 }
+
+
 
 
 
@@ -554,7 +549,7 @@ private static void reverseWordsTask() {
      * String innerhalb einer bestimmten Zeitspanne zählen.
      */
     private static void countStringsTask() {
-        System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
+        System.out.println("\nDer Dämon stellt dir eine Aufgabe.");
         System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
 //characters enthält zeichen tamrex
 // characters enthält die Zeichen t, a, m, r, e, und x.
