@@ -539,6 +539,9 @@ private static void reverseWordsTask() {
         System.out.println("\nDer Dämon stellt dir eine weitere Aufgabe.");
         System.out.println("Zähle, wie oft die Sequenz 'tam' in dem folgenden String vorkommt:");
 //characters enthält zeichen tamrex
+// characters enthält die Zeichen t, a, m, r, e, und x.
+//Ein StringBuilder-Objekt wird erstellt, um den zufälligen String zu bauen.
+//Eine Schleife läuft 50 Mal, und in jedem Durchlauf wird ein zufälliges Zeichen aus characters ausgewählt und an generatedString angehängt.
         String characters = "tamrex";
         //objekt um zufälligen string zu erstellen
         //generatedstring ist ein stringbuilder objekt, um zufälligen string zusammenzusetzen
@@ -592,7 +595,7 @@ private static void reverseWordsTask() {
 
      //str zu suchen, sub zu zählender string
      //str= gesamter zu durchsende string, in dem wir nach substring suchen(tamrex)
-     //der substring, den wir im string str zählen, bei uns: tam
+     //der substring tam
     private static int countOccurrences(String str, String sub) {
         //zählt substrings= tam
         int count = 0;
