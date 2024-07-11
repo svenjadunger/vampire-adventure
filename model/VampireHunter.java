@@ -10,7 +10,7 @@ public class VampireHunter {
         this.energy = energy;
     }
 
-    // Getter & Setter
+    // Getter u. Setter
     public String getName() {
         return name;
     }
