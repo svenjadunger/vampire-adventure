@@ -28,10 +28,10 @@ public class Human {
     public void loseBlood(double amount) {
         this.amountOfBlood -= amount;
         System.out.println("Der Mensch hat " + amount + " Liter Blut verloren.");
-        // Wenn der Mensch weniger als 5 Liter Blut hat, wird er in einen Vampir verwandelt
+        // Wenn der Mensch weniger als 5 Liter Blut hat, wird er in einen Vampir
+        // verwandelt
         if (this.amountOfBlood < 5) {
             System.out.println("Der Mensch hat sich in einen Vampir verwandelt.");
         }
     }
 }
-

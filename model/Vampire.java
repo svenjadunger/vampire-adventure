@@ -2,7 +2,7 @@ package model;
 
 public class Vampire {
     private String name;
-    private int age; 
+    private int age;
     private int grandness;
     private int hunger;
     private int energy;
@@ -16,9 +16,9 @@ public class Vampire {
         this.name = name;
         this.age = age;
         this.blutgruppe = blutgruppe;
-        this.grandness = 0; 
-        this.hunger = 0; 
-        this.energy = 10; 
+        this.grandness = 0;
+        this.hunger = 0;
+        this.energy = 10;
         this.finallyDead = false;
         this.doublePower = false;
         this.transparency = false;
@@ -41,11 +41,11 @@ public class Vampire {
         this.age = age;
     }
 
-    public String getBlutgruppe () {
+    public String getBlutgruppe() {
         return blutgruppe;
     }
 
-    public void setBlutgruppe (String blutgruppe) {
+    public void setBlutgruppe(String blutgruppe) {
         this.blutgruppe = blutgruppe;
     }
 
@@ -99,7 +99,6 @@ public class Vampire {
 
     // Methoden
 
-    
     // Methode zum Angreifen eines Menschen
     public void attackHuman(Human human) {
         System.out.println("Der Vampir greift einen Menschen an.");
@@ -111,34 +110,34 @@ public class Vampire {
         }
     }
 
-     // Methode zum Trinken von Blut
-     public void drinkBlood(double amount) {
+    // Methode zum Trinken von Blut
+    public void drinkBlood(double amount) {
         if (amount < 0 || amount > 6) {
             System.out.println("Ungueltige Menge. Bitte geben Sie eine Menge zwischen 0 und 6 Litern ein.");
             return;
         }
-    
+
         System.out.println("Der Vampir trinkt " + amount + " Liter Blut.");
-    
+
         if (amount >= 5) {
             System.out.println("Der Mensch wird in einen Vampir verwandelt.");
         }
-    
+
         this.hunger = 0;
-    
+
         this.energy += amount;
         if (this.energy > 20) {
             this.energy = 20;
         }
-    
-        System.out.println("Der Hunger des Vampirs ist nun " + this.hunger + " und seine Energie ist " + this.energy + ".");
-    }
-    
 
-    
-        // Methode um Schaden zu nehmen
+        System.out.println(
+                "Der Hunger des Vampirs ist nun " + this.hunger + " und seine Energie ist " + this.energy + ".");
+    }
+
+    // Methode um Schaden zu nehmen
     public void takeDamage(int damage) {
-        // Wenn der Vampir die Fähigkeit Transparenz hat, gibt es eine 50% Chance, keinen Schaden zu nehmen
+        // Wenn der Vampir die Fähigkeit Transparenz hat, gibt es eine 50% Chance,
+        // keinen Schaden zu nehmen
         if (this.transparency) {
             if (Math.random() > 0.5) {
                 System.out.println("Dank der Transparenz hat der Vampir keinen Schaden genommen.");
@@ -177,22 +176,19 @@ public class Vampire {
         return success;
     }
 
+    // Überschriebene toString-Methode, um die Eigenschaften des Vampirs als String
+    // zurückzugeben
+    @Override
+    public String toString() {
+        return "Vampir Name: " + name + "\n" +
+                "Alter: " + age + "\n" +
+                "Blutgruppe: " + blutgruppe + "\n" +
+                "Mächtigkeit: " + grandness + "\n" +
+                "Hunger: " + hunger + "\n" +
+                "Energie: " + energy + "\n" +
+                "Endgültig tot: " + finallyDead + "\n" +
+                "Doppelte Kraft: " + doublePower + "\n" +
+                "Transparenz: " + transparency;
+    }
 
-
-
-// Überschriebene toString-Methode, um die Eigenschaften des Vampirs als String zurückzugeben
-@Override
-public String toString() {
-    return "Vampir Name: " + name + "\n" +
-           "Alter: " + age + "\n" +
-           "Blutgruppe: " + blutgruppe + "\n" +
-           "Mächtigkeit: " + grandness + "\n" +
-           "Hunger: " + hunger + "\n" +
-           "Energie: " + energy + "\n" +
-           "Endgültig tot: " + finallyDead + "\n" +
-           "Doppelte Kraft: " + doublePower + "\n" +
-           "Transparenz: " + transparency;
-}
-
-   
 }

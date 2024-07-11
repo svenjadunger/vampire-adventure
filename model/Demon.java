@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Scanner;
 
 public class Demon {
@@ -34,13 +35,13 @@ public class Demon {
         // Beispiel-Aufgabe: Zahlenrate-Rätsel
         System.out.println("Der Dämon stellt dir ein Rätsel:");
         System.out.println("Ich denke an eine Zahl zwischen 1 und 10. Kannst du sie erraten?");
-        
+
         int randomNumber = (int) (Math.random() * 10) + 1;
-        
+
         for (int i = 0; i < 3; i++) { // Drei Versuche
             System.out.print("Dein Tipp: ");
             int guess = scanner.nextInt();
-            
+
             if (guess == randomNumber) {
                 System.out.println("Das ist richtig! Du erhältst die Fähigkeit: " + vampireAbility);
                 return;
@@ -48,7 +49,7 @@ public class Demon {
                 System.out.println("Falsch. Versuch es nochmal.");
             }
         }
-        
+
         System.out.println("Leider hast du die Zahl nicht erraten. Der Dämon verschwindet.");
     }
 }
