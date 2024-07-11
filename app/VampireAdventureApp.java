@@ -1,6 +1,6 @@
 package app;
 
-import java.util.InputMismatchException;
+import java.util.InputMismatchException; // Import für Eingabe-Fehlerbehandlung, z.B. Wort statt Zahl
 import java.util.Scanner;
 import java.util.Random;
 import model.Vampire;
@@ -12,20 +12,27 @@ import model.VampireHunter;
  * VampireAdventureApp ist das Hauptprogramm, das ein Menü anzeigt, in dem man einen Vampir erstellen,
  * die Daten anzeigen, den Vampir löschen und ein Abenteuer starten kann.
  */
+//Hauptklasse 
 public class VampireAdventureApp {
+    //um Benutzereingaben zu lesen
     private static Scanner scanner = new Scanner(System.in);
+    //private statische Variable, die eine Instanz der Klasse Vampir speichert
     private static Vampire aktuellerVampir;
     private static Random random = new Random();
 
 
     public static void main(String[] args) {
         showBat();
+        //Endlosschleife, Hauptmenü wird immer wieder gezeigt bis Programm beendet 
         while (true) {
             showMenu();
+            //lest Zahlen und speichert in choice
             int choice = readMenuChoice();
-            if (choice == 0) { // Wahl für den Test der Ereignisverteilung
+            if (choice == 0) { // wenn 0, dann aufrufen von testEventDistrubution 
+                // Funktion zur Zufallsereignisverteilung 
                 testEventDistribution();
             } else {
+                // wenn nicht 0, dann Aufruf handle vererbeitung von Wahl des Benutzers
                 handle(choice);
             }
             System.out.println("====================");
@@ -38,19 +45,26 @@ public class VampireAdventureApp {
      * Methode zur Überprüfung der Verteilung der Ereignisse
      */
     public static void testEventDistribution() {
+        // zählt, wie oft ein Mensch getroffen wird
         int humanCount = 0;
         int demonCount = 0;
         int hunterCount = 0;
+        // zählt, wie oft nichts passiert
         int nothingCount = 0;
 
+        // 1000 höhere Genauigkeit
         for (int i = 0; i < 1000; i++) {
+            //zufälliger Wert zwischen 1 und 100 generiert 
             int event = random.nextInt(100) + 1;
             if (event <= 60) {
                 humanCount++;
+                //20% Demon
             } else if (event <= 80) {
                 demonCount++;
+                // 10% Vampirjäger 
             } else if (event <= 90) {
                 hunterCount++;
+                // 10% nichts passiert
             } else {
                 nothingCount++;
             }
@@ -71,11 +85,16 @@ public class VampireAdventureApp {
      * @return the menu option chosen by the user
      */
     private static int readMenuChoice() {
+        // speichert die gewählte Menüoption (choiseInternal)
+        // 0 könnte versehentlich gültige Eingabe sein
         int choiceInternal = -1;
         boolean validInput = false;
+        // Schleife läuft solange bis validInput ist true
         while (!validInput) {
             System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (1-5):\t");
+            // versucht die Eingabe des Benutzers als int zu lesen, wenn keine gültige Zahl dann InputMismatchException
             try {
+                // scanner.nextInt liest die nächste Eingabe als int
                 choiceInternal = scanner.nextInt();
                 scanner.nextLine();
                 if (choiceInternal >= 1 && choiceInternal <= 5) {
@@ -88,7 +107,7 @@ public class VampireAdventureApp {
                 scanner.nextLine(); // Konsumiere die ungültige Eingabe
             }
         }
-        return choiceInternal;
+        return choiceInternal; // Menü erneut anzeigen
     }
 
 
@@ -100,6 +119,7 @@ public class VampireAdventureApp {
     private static int readUserInput(int min, int max) {
         int choiceInternal = -1;
         boolean validInput = false;
+        // Schleife läuft nur wenn falsch ist bis es true ist
         while (!validInput) {
             System.out.print("\nBitte, geben Sie die Nummer des gewaehlten Menueeintrags ein (" + min + "-" + max + "):\t");
             try {
@@ -178,6 +198,7 @@ public class VampireAdventureApp {
     private static void showMenu() {
         System.out.println("\n======= Vampire Adventure 1.0 =======\n");
 
+        // Array von String Objekten 
         final String[] menuItems = {
             "(1)\t Vampir anlegen",
             "(2)\t Vampirdaten anzeigen",
@@ -257,6 +278,7 @@ public class VampireAdventureApp {
         for (int round = 1; round <= 12; round++) {
             System.out.println("\nRise vampires, the sun has gone down and there is lots that needs to be done. \nTime is running: Round " + round);
             
+            // zufallszahl zwischen 0 und 99 + 1, also 1 bis 100
             int event = random.nextInt(100) + 1;
             if (event <= 60) {
                 meetHuman();
@@ -271,13 +293,15 @@ public class VampireAdventureApp {
             } else {
                 System.out.println("\nNichts passiert.\n");
             }
+            // nach jeden Ereignis wird hunger des Vampirs um 1 erhöht
             aktuellerVampir.setHunger(aktuellerVampir.getHunger() + 1);
             if (aktuellerVampir.getHunger() >= 5) {
                 System.out.println("Der Vampir hat zu viel hunger und ist gestorben.");
-                aktuellerVampir = null;
+                aktuellerVampir = null; // Spiel zu Ende
                 System.out.println("Spiel vorbei.");
                 return;
             }
+            // die Energie erhöht sich nach jeder Runde um 10 Punkte
             aktuellerVampir.setEnergy(aktuellerVampir.getEnergy() + 10);
         }
         System.out.println("Das Abenteuer ist zu Ende. Die Nacht bricht an.");
@@ -301,6 +325,7 @@ public class VampireAdventureApp {
             while (bloodAmount < 0 || bloodAmount > 6) {
                 System.out.print("Wie viel Blut möchtest du trinken (0-6 Liter)? ");
                 try {
+                    // liest die Eingabe als double
                     bloodAmount = scanner.nextDouble();
                     scanner.nextLine();
                     if (bloodAmount < 0 || bloodAmount > 6) {
@@ -313,6 +338,8 @@ public class VampireAdventureApp {
             }
             aktuellerVampir.drinkBlood(bloodAmount);
             System.out.println("Du hast " + bloodAmount + " Liter Blut getrunken.");
+
+            // im Fall 2
         } else {
             System.out.println("Du hast den Menschen in Ruhe gelassen.");
         }
@@ -400,6 +427,7 @@ private static void reverseWordsTask() {
 
     boolean allCorrect = true;
     for (int i = 0; i < 3; i++) {
+        // StringBuilder tut mit reverse das Wort umdrehen, toString verwandelt es in ein String und equals vergleicht es mit der Eingabe
         if (!new StringBuilder(selectedWords[i]).reverse().toString().equals(reversedWords[i])) {
             allCorrect = false;
             break;
@@ -520,6 +548,7 @@ private static void reverseWordsTask() {
         // Generiert einen zufälligen String mit "tam" und "rex"
         //zufälliges zeichen wird zu generatedstring hinzugefügt, randomnextint gibt zufälligen index zwischen 0 u. d. Länge von character zurück, charat gibt zeichen an der zufälligen position in characterstring zurücl
         for (int i = 0; i < 50; i++) {
+            // charAt tam Position vom String
             generatedString.append(characters.charAt(random.nextInt(characters.length())));
         }
 //konvertierung in string
